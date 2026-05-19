@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Durva Dalal — Marketing & Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --white: #f5f0e8;
+  --cream: #ede8dc;
+  --acid: #c8f000;
+  --coral: #ff5c3a;
+  --pink: #ff85a1;
+  --lavender: #c4b5fd;
+  --teal: #00d4aa;
+  --ink: #1a1a2e;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--black); color:var(--white); font-family:'DM Sans',sans-serif; overflow-x:hidden; cursor:none; }
+
+.cursor { width:12px; height:12px; background:var(--acid); border-radius:50%; position:fixed; top:0; left:0; pointer-events:none; z-index:9999; transition:transform 0.1s ease; mix-blend-mode:difference; }
+.cursor-follower { width:40px; height:40px; border:1px solid var(--acid); border-radius:50%; position:fixed; top:0; left:0; pointer-events:none; z-index:9998; transition:all 0.15s ease; mix-blend-mode:difference; }
+
+nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:24px 48px; display:flex; justify-content:space-between; align-items:center; mix-blend-mode:difference; }
+.nav-logo { font-family:'Space Mono',monospace; font-size:13px; color:var(--white); letter-spacing:0.15em; text-transform:uppercase; }
+.nav-links { display:flex; gap:40px; list-style:none; }
+.nav-links a { font-family:'Space Mono',monospace; font-size:11px; color:var(--white); text-decoration:none; letter-spacing:0.12em; text-transform:uppercase; opacity:0.7; transition:opacity 0.2s; }
+.nav-links a:hover { opacity:1; }
+
+/* HERO */
+#hero { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; position:relative; overflow:hidden; }
+.hero-left { display:flex; flex-direction:column; justify-content:flex-end; padding:120px 48px 80px; position:relative; z-index:2; }
+.hero-tag { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--acid); margin-bottom:24px; opacity:0; animation:fadeUp 0.8s ease 0.3s forwards; }
+.hero-name { font-family:'Playfair Display',serif; font-size:clamp(72px,8vw,120px); font-weight:900; line-height:0.9; letter-spacing:-0.03em; opacity:0; animation:fadeUp 0.8s ease 0.5s forwards; }
+.hero-name .line-2 { display:block; color:var(--acid); font-style:italic; }
+.hero-desc { margin-top:40px; font-size:16px; line-height:1.7; color:rgba(245,240,232,0.65); max-width:400px; opacity:0; animation:fadeUp 0.8s ease 0.7s forwards; }
+.hero-desc strong { color:var(--white); font-weight:600; }
+.hero-ctas { margin-top:48px; display:flex; gap:16px; opacity:0; animation:fadeUp 0.8s ease 0.9s forwards; flex-wrap:wrap; }
+
+.btn-primary { background:var(--acid); color:var(--black); padding:14px 32px; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; text-decoration:none; font-weight:700; transition:all 0.2s; display:inline-block; }
+.btn-primary:hover { background:var(--white); transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--coral); }
+.btn-secondary { border:1px solid rgba(245,240,232,0.3); color:var(--white); padding:14px 32px; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; text-decoration:none; transition:all 0.2s; display:inline-block; }
+.btn-secondary:hover { border-color:var(--white); background:rgba(245,240,232,0.05); }
+
+.hero-right { position:relative; overflow:hidden; }
+.hero-img-container { position:absolute; inset:0; opacity:0; animation:fadeIn 1.2s ease 0.4s forwards; }
+.hero-img-container img { width:100%; height:100%; object-fit:cover; object-position:center top; filter:grayscale(15%) contrast(1.1); }
+.hero-img-overlay { position:absolute; inset:0; background:linear-gradient(to right, var(--black) 0%, transparent 30%), linear-gradient(to top, var(--black) 0%, transparent 40%); }
+.hero-sticker { position:absolute; bottom:80px; right:48px; width:120px; height:120px; background:var(--coral); border-radius:50%; display:flex; align-items:center; justify-content:center; text-align:center; font-family:'Space Mono',monospace; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--white); animation:spin 12s linear infinite, fadeIn 1s ease 1.2s both; z-index:3; line-height:1.4; padding:10px; }
+.hero-scroll-hint { position:absolute; bottom:40px; left:48px; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:rgba(245,240,232,0.3); display:flex; align-items:center; gap:12px; opacity:0; animation:fadeIn 1s ease 1.5s forwards; }
+.hero-scroll-hint::before { content:''; width:40px; height:1px; background:rgba(245,240,232,0.3); }
+
+/* MARQUEE */
+.marquee-section { background:var(--acid); padding:16px 0; overflow:hidden; white-space:nowrap; }
+.marquee-track { display:inline-flex; animation:marquee 25s linear infinite; }
+.marquee-item { font-family:'Playfair Display',serif; font-size:18px; font-weight:700; font-style:italic; color:var(--black); padding:0 40px; }
+.marquee-sep { color:var(--coral); padding:0 8px; }
+
+/* WORK */
+#work { padding:120px 48px; max-width:1400px; margin:0 auto; }
+.section-header { display:flex; align-items:baseline; gap:24px; margin-bottom:80px; }
+.section-number { font-family:'Space Mono',monospace; font-size:11px; color:var(--acid); letter-spacing:0.15em; }
+.section-title { font-family:'Playfair Display',serif; font-size:clamp(48px,5vw,72px); font-weight:900; line-height:1; }
+
+/* TABS */
+.work-tabs { display:flex; margin-bottom:60px; border-bottom:1px solid rgba(245,240,232,0.1); flex-wrap:wrap; }
+.tab-btn { background:none; border:none; padding:16px 28px; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(245,240,232,0.4); cursor:none; transition:all 0.2s; border-bottom:2px solid transparent; margin-bottom:-1px; }
+.tab-btn.active { color:var(--acid); border-bottom-color:var(--acid); }
+.tab-btn:hover { color:var(--white); }
+.tab-content { display:none; }
+.tab-content.active { display:block; }
+
+/* CAMPAIGN GRID */
+.campaign-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:2px; }
+.case-card { position:relative; overflow:hidden; background:#1a1a1a; cursor:none; }
+.case-card.wide { grid-column:span 2; }
+.case-card-bg { position:absolute; inset:0; transition:transform 0.6s ease; }
+.case-card:hover .case-card-bg { transform:scale(1.04); }
+.case-card-overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.5) 50%, rgba(10,10,10,0.2) 100%); }
+.case-card-content { position:absolute; bottom:0; left:0; right:0; padding:40px; }
+.case-tag { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:12px; display:inline-block; padding:4px 12px; }
+.case-title { font-family:'Playfair Display',serif; font-size:clamp(20px,2.2vw,32px); font-weight:700; line-height:1.2; margin-bottom:10px; }
+.case-meta { font-size:13px; color:rgba(245,240,232,0.65); line-height:1.6; max-width:600px; margin-bottom:12px; }
+.case-stat { font-family:'Space Mono',monospace; font-size:10px; color:var(--acid); letter-spacing:0.1em; margin-bottom:12px; display:block; }
+.case-links { display:flex; flex-wrap:wrap; gap:8px; }
+.case-link { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--black); background:var(--acid); padding:5px 10px; text-decoration:none; transition:background 0.2s; }
+.case-link.outline { background:transparent; color:var(--white); border:1px solid rgba(245,240,232,0.3); }
+.case-link:hover { background:var(--white); }
+.case-link.outline:hover { background:rgba(245,240,232,0.1); }
+
+/* VIDEO PREVIEW */
+.video-thumb { width:100%; aspect-ratio:16/9; background:#111; position:relative; overflow:hidden; }
+.video-thumb iframe { width:100%; height:100%; border:none; }
+.video-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:2px; margin-bottom:2px; }
+.video-grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-bottom:2px; }
+
+/* CARD COLORS */
+.card-gamezy .case-card-bg { background:linear-gradient(135deg,#0d0e2a 0%,#1a1a5e 50%,#2d0a4e 100%); }
+.card-gamezy .case-tag { background:var(--lavender); color:var(--black); }
+.card-icici .case-card-bg { background:linear-gradient(135deg,#0a1e0f 0%,#1a4d2e 100%); }
+.card-icici .case-tag { background:var(--teal); color:var(--black); }
+.card-kushal .case-card-bg { background:linear-gradient(135deg,#2e0a0a 0%,#6b1a1a 100%); }
+.card-kushal .case-tag { background:var(--coral); color:var(--white); }
+.card-ngo .case-card-bg { background:linear-gradient(135deg,#0a1a2e 0%,#0d3b6e 50%,#1a2e0a 100%); }
+.card-ngo .case-tag { background:var(--pink); color:var(--black); }
+
+/* STRATEGY GRID */
+.strategy-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; }
+.strategy-card { background:#131313; padding:56px 48px; position:relative; overflow:hidden; transition:background 0.3s; }
+.strategy-card:hover { background:#1c1c1c; }
+.strategy-card::before { content:''; position:absolute; top:0; left:0; width:3px; height:0; transition:height 0.4s ease; }
+.strategy-card:hover::before { height:100%; }
+.s1::before { background:var(--teal); }
+.s2::before { background:var(--coral); }
+.s3::before { background:var(--acid); }
+.s4::before { background:var(--lavender); }
+.strategy-number { font-family:'Playfair Display',serif; font-size:80px; font-weight:900; line-height:1; opacity:0.05; position:absolute; top:24px; right:32px; }
+.strategy-icon { font-size:28px; margin-bottom:24px; }
+.strategy-title { font-family:'Playfair Display',serif; font-size:26px; font-weight:700; margin-bottom:16px; line-height:1.2; }
+.strategy-body { font-size:14px; line-height:1.8; color:rgba(245,240,232,0.6); margin-bottom:24px; }
+.strategy-metric { font-family:'Space Mono',monospace; font-size:11px; color:var(--acid); letter-spacing:0.1em; margin-bottom:20px; display:block; }
+.strategy-tags { display:flex; flex-wrap:wrap; gap:8px; }
+.strategy-tag { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; padding:5px 10px; border:1px solid rgba(245,240,232,0.15); color:rgba(245,240,232,0.5); }
+.strategy-link { display:inline-block; margin-top:16px; font-family:'Space Mono',monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--acid); text-decoration:none; border-bottom:1px solid var(--acid); padding-bottom:2px; }
+
+/* SALFORD SECTION */
+#salford { padding:120px 48px; background:var(--ink); position:relative; overflow:hidden; }
+#salford::before { content:'NOW'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-family:'Playfair Display',serif; font-size:300px; font-weight:900; color:rgba(200,240,0,0.03); pointer-events:none; white-space:nowrap; }
+.salford-inner { display:grid; grid-template-columns:1fr 2fr; gap:80px; align-items:start; position:relative; z-index:1; max-width:1400px; margin:0 auto; }
+.salford-left .section-number { color:var(--acid); margin-bottom:16px; display:block; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.15em; }
+.salford-employer { font-family:'Playfair Display',serif; font-size:48px; font-weight:900; line-height:1.1; margin-bottom:8px; }
+.salford-role { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--acid); margin-bottom:40px; }
+.salford-desc { font-size:15px; line-height:1.8; color:rgba(245,240,232,0.6); }
+.achievements-list { list-style:none; display:flex; flex-direction:column; gap:2px; }
+.achievement-item { background:rgba(245,240,232,0.03); padding:32px 40px; border-left:3px solid transparent; transition:all 0.3s; display:flex; gap:32px; align-items:flex-start; }
+.achievement-item:hover { background:rgba(245,240,232,0.06); border-left-color:var(--acid); }
+.achievement-icon { font-size:24px; flex-shrink:0; width:40px; }
+.achievement-text h4 { font-family:'Playfair Display',serif; font-size:20px; font-weight:700; margin-bottom:8px; }
+.achievement-text p { font-size:14px; line-height:1.7; color:rgba(245,240,232,0.55); }
+.achievement-text .metric { font-family:'Space Mono',monospace; font-size:11px; color:var(--acid); letter-spacing:0.1em; margin-top:8px; display:block; }
+
+/* UNI SECTION */
+#university { padding:120px 48px; background:#0d0d0d; }
+.uni-inner { max-width:1400px; margin:0 auto; }
+.uni-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-top:60px; }
+.uni-card { background:#131313; padding:64px 56px; position:relative; overflow:hidden; transition:background 0.3s; display:flex; flex-direction:column; justify-content:space-between; min-height:480px; }
+.uni-card:hover { background:#1a1a1a; }
+.uni-card-bg { position:absolute; inset:0; opacity:0.15; transition:opacity 0.4s; }
+.uni-card:hover .uni-card-bg { opacity:0.25; }
+.uni-card-content { position:relative; z-index:1; }
+.uni-tag { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--acid); margin-bottom:16px; display:block; }
+.uni-title { font-family:'Playfair Display',serif; font-size:clamp(28px,2.5vw,40px); font-weight:900; margin-bottom:16px; line-height:1.1; }
+.uni-body { font-size:14px; line-height:1.8; color:rgba(245,240,232,0.6); margin-bottom:28px; }
+.uni-cta { display:inline-block; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--black); background:var(--acid); padding:12px 24px; text-decoration:none; transition:all 0.2s; position:relative; z-index:1; }
+.uni-cta:hover { background:var(--white); transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--coral); }
+
+/* ABOUT */
+#about { padding:120px 48px; background:var(--cream); color:var(--black); }
+#about .section-title { color:var(--black); }
+#about .section-number { color:var(--coral); }
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; margin-top:60px; }
+.about-text p { font-size:18px; line-height:1.85; color:rgba(10,10,10,0.75); margin-bottom:24px; }
+.about-text p strong { color:var(--black); font-weight:600; }
+.about-accent { font-family:'Playfair Display',serif; font-size:32px; font-style:italic; font-weight:700; color:var(--coral); line-height:1.3; margin-bottom:40px; display:block; }
+.stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-bottom:40px; }
+.stat-block { background:var(--black); color:var(--white); padding:40px 32px; }
+.stat-num { font-family:'Playfair Display',serif; font-size:56px; font-weight:900; line-height:1; color:var(--acid); }
+.stat-label { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(245,240,232,0.5); margin-top:8px; line-height:1.5; }
+.skills-list { margin-top:0; }
+.skills-row { display:flex; align-items:center; justify-content:space-between; padding:16px 0; border-bottom:1px solid rgba(10,10,10,0.1); }
+.skill-name { font-size:15px; font-weight:500; color:var(--black); }
+.skill-bar { width:180px; height:3px; background:rgba(10,10,10,0.1); position:relative; overflow:hidden; }
+.skill-fill { position:absolute; top:0; left:0; height:100%; background:var(--coral); width:0; transition:width 1s ease; }
+.skills-list.visible .skill-fill { width:var(--pct); }
+
+/* OUTSIDE WORK */
+.outside-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:40px; }
+.outside-card { background:var(--black); padding:32px 28px; transition:background 0.3s; }
+.outside-card:hover { background:#1a1a1a; }
+.outside-icon { font-size:32px; margin-bottom:16px; }
+.outside-title { font-family:'Playfair Display',serif; font-size:18px; font-weight:700; color:var(--white); margin-bottom:8px; }
+.outside-body { font-size:13px; line-height:1.7; color:rgba(245,240,232,0.5); }
+.outside-link { display:inline-block; margin-top:12px; font-family:'Space Mono',monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--acid); text-decoration:none; border-bottom:1px solid var(--acid); padding-bottom:2px; }
+
+/* CONTACT */
+#contact { padding:120px 48px; background:var(--black); text-align:center; position:relative; overflow:hidden; }
+.contact-bg-text { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-family:'Playfair Display',serif; font-size:240px; font-weight:900; color:rgba(245,240,232,0.02); pointer-events:none; white-space:nowrap; }
+.contact-inner { position:relative; z-index:1; }
+.contact-pre { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--acid); margin-bottom:32px; display:block; }
+.contact-headline { font-family:'Playfair Display',serif; font-size:clamp(48px,6vw,96px); font-weight:900; line-height:0.95; margin-bottom:48px; }
+.contact-headline em { font-style:italic; color:var(--coral); }
+.contact-email { display:inline-block; font-family:'Playfair Display',serif; font-size:clamp(22px,3vw,36px); color:var(--white); text-decoration:none; border-bottom:2px solid var(--acid); padding-bottom:4px; transition:color 0.2s; margin-bottom:32px; }
+.contact-email:hover { color:var(--acid); }
+.contact-ctas { display:flex; justify-content:center; gap:16px; margin-bottom:64px; flex-wrap:wrap; }
+.social-links { display:flex; justify-content:center; gap:32px; }
+.social-link { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:rgba(245,240,232,0.4); text-decoration:none; transition:color 0.2s; display:flex; align-items:center; gap:8px; }
+.social-link:hover { color:var(--acid); }
+.social-link::before { content:'↗'; }
+
+footer { background:#050505; padding:32px 48px; display:flex; justify-content:space-between; align-items:center; }
+.footer-copy { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.1em; color:rgba(245,240,232,0.2); text-transform:uppercase; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+@keyframes spin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+
+body::after { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); opacity:0.4; pointer-events:none; z-index:9997; }
+
+.reveal { opacity:0; transform:translateY(32px); transition:opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<nav>
+  <span class="nav-logo">Durva Dalal</span>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#salford">Currently</a></li>
+    <li><a href="#university">University</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <span class="hero-tag">Marketing Coordinator · Strategist · Storyteller · Manchester, UK</span>
+    <h1 class="hero-name">
+      Durva<br>
+      <span class="line-2">Dalal.</span>
+    </h1>
+    <p class="hero-desc">
+      <strong>Campaigns that reached millions. Strategy that moved numbers. Writing that does both.</strong><br>
+      From television commercials for ICICI Bank and the Gates Foundation to building email programmes from scratch for 26,000 students, I work where creative meets strategic.
+    </p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn-primary">View My Work</a>
+      <a href="#contact" class="btn-secondary">Let's Talk</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-container">
+      <img src="durva.jpg" alt="Durva Dalal" onerror="this.style.display='none'">
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,#1e0a3c 0%,#3d1a6b 40%,#6b1a3d 100%);z-index:-1;"></div>
+      <div class="hero-img-overlay"></div>
+    </div>
+    <div class="hero-sticker">MA Adv &amp; Design · Leeds · 2023</div>
+  </div>
+  <span class="hero-scroll-hint">Scroll to explore</span>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">Gamezy <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">ICICI Bank <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Kushal's Jewellery <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Gates Foundation <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Save the Children <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Salford SU <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Leam Music Academy <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">O2 Telefonica <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">2M+ Views <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Gamezy <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">ICICI Bank <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Kushal's Jewellery <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Gates Foundation <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Save the Children <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Salford SU <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">Leam Music Academy <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">O2 Telefonica <span class="marquee-sep">✦</span></span>
+    <span class="marquee-item">2M+ Views <span class="marquee-sep">✦</span></span>
+  </div>
+</div>
+
+<!-- WORK -->
+<section id="work">
+  <div class="section-header reveal">
+    <span class="section-number">01</span>
+    <h2 class="section-title">Selected Work</h2>
+  </div>
+
+  <div class="work-tabs">
+    <button class="tab-btn active" onclick="switchTab('campaigns',this)">Ad Films &amp; Campaigns</button>
+    <button class="tab-btn" onclick="switchTab('content',this)">Content &amp; Writing</button>
+    <button class="tab-btn" onclick="switchTab('strategy',this)">Strategy &amp; Web Projects</button>
+    <button class="tab-btn" onclick="switchTab('ngo',this)">NGO &amp; Purpose</button>
+  </div>
+
+  <!-- AD FILMS TAB -->
+  <div class="tab-content active" id="tab-campaigns">
+
+    <!-- GAMEZY -->
+    <div style="margin-bottom:2px;">
+      <div class="case-card card-gamezy wide reveal" style="aspect-ratio:unset; min-height:120px;">
+        <div class="case-card-bg" style="background:linear-gradient(135deg,#0d0e2a 0%,#1a1a5e 50%,#2d0a4e 100%);"></div>
+        <div class="case-card-overlay"></div>
+        <div class="case-card-content" style="position:relative; padding:40px 48px;">
+          <span class="case-tag" style="background:var(--lavender);color:var(--black);">Television Commercial · 2022 &amp; 2023 · IPL</span>
+          <h3 class="case-title">Gamezy — IPL Campaign Series</h3>
+          <p class="case-meta">Two seasons of TVC campaigns for India's leading fantasy sports app during the IPL. The creative insight: humans are wired to compete. "App Badlo" gave frustrated fans a simple, funny solution. Multiple spots, broadcast nationally, 2M+ total views.</p>
+          <span class="case-stat">10 commercials · IPL broadcast · National reach</span>
+        </div>
+      </div>
+      <div class="video-grid reveal">
+        <div class="video-thumb"><iframe src="https://www.youtube.com/embed/FevCmezp7X4" loading="lazy" allowfullscreen></iframe></div>
+        <div class="video-thumb"><iframe src="https://www.youtube.com/embed/rarBJ9zQ9TQ" loading="lazy" allowfullscreen></iframe></div>
+      </div>
+      <div class="video-grid-3 reveal">
+        <div class="video-thumb"><iframe src="https://www.youtube.com/embed/vjYsPipqPvw" loading="lazy" allowfullscreen></iframe></div>
+        <div class="video-thumb"><iframe src="https://www.youtube.com/embed/MeAGpbcsJxM" loading="lazy" allowfullscreen></iframe></div>
+        <div class="video-thumb"><iframe src="https://www.youtube.com/embed/1UcvWEoesIo" loading="lazy" allowfullscreen></iframe></div>
+      </div>
+      <div style="display:flex;gap:8px;padding:16px;background:#0d0d0d;flex-wrap:wrap;">
+        <a href="https://youtu.be/PTQQz26V6eM" target="_blank" class="case-link">Watch 6</a>
+        <a href="https://youtu.be/EaEwj3RftE8" target="_blank" class="case-link">Watch 7</a>
+        <a href="https://youtu.be/2w_jmfdpegw" target="_blank" class="case-link">Watch 8</a>
+        <a href="https://youtu.be/5HSgSSFj5Gs" target="_blank" class="case-link">Watch 9</a>
+        <a href="https://youtu.be/EKjSFxIh6LU" target="_blank" class="case-link">Watch 10</a>
+      </div>
+    </div>
+
+    <!-- ICICI + KUSHAL -->
+    <div class="campaign-grid" style="margin-top:2px;">
+      <div>
+        <div class="case-card card-icici reveal" style="aspect-ratio:unset; min-height:200px;">
+          <div class="case-card-bg"></div>
+          <div class="case-card-overlay"></div>
+          <div class="case-card-content" style="position:relative; padding:32px 40px;">
+            <span class="case-tag" style="background:var(--teal);color:var(--black);">Digital Campaign · 2022</span>
+            <h3 class="case-title">ICICI Bank — Father's Day</h3>
+            <p class="case-meta">Emotional campaign scripted for ICICI's youth bank account. A father's quiet commitment to his child's welfare, turned into a story worth watching.</p>
+            <span class="case-stat">Nationalised bank · Youth segment</span>
+          </div>
+        </div>
+        <div class="video-thumb reveal"><iframe src="https://www.youtube.com/embed/7-jypq7uIoY" loading="lazy" allowfullscreen></iframe></div>
+      </div>
+      <div>
+        <div class="case-card card-kushal reveal" style="aspect-ratio:unset; min-height:200px;">
+          <div class="case-card-bg"></div>
+          <div class="case-card-overlay"></div>
+          <div class="case-card-content" style="position:relative; padding:32px 40px;">
+            <span class="case-tag" style="background:var(--coral);color:var(--white);">Digital Campaign · 2022</span>
+            <h3 class="case-title">Kushal's Jewellery — Rakshabandhan</h3>
+            <p class="case-meta">Campaign strategy and script. Brothers struggle to find the right gift. Kushal's has something for every kind of sister.</p>
+            <span class="case-stat">Festival campaign · Indian market</span>
+          </div>
+        </div>
+        <div class="video-grid reveal">
+          <div class="video-thumb"><iframe src="https://www.youtube.com/embed/rlmGuSVDw9U" loading="lazy" allowfullscreen></iframe></div>
+          <div class="video-thumb"><iframe src="https://www.youtube.com/embed/n-KiFQnT1No" loading="lazy" allowfullscreen></iframe></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CONTENT TAB -->
+  <div class="tab-content" id="tab-content">
+    <div class="strategy-grid">
+      <div class="strategy-card s3 reveal">
+        <span class="strategy-number">01</span>
+        <div class="strategy-icon">✍️</div>
+        <h3 class="strategy-title">Blogs &amp; Articles</h3>
+        <p class="strategy-body">Four years of SEO-led blog writing across industries. From personal travel writing at Baristog to industry articles at Aagey Se Right, to a full library of resume and career-guide articles for a software company in Ireland. Consistent output, keyword-conscious, always written for humans first.</p>
+        <div class="strategy-tags">
+          <span class="strategy-tag">SEO Writing</span>
+          <span class="strategy-tag">Long-form</span>
+          <span class="strategy-tag">Editorial</span>
+        </div>
+        <div style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap;">
+          <a href="https://baristog.blogspot.com/" target="_blank" class="case-link">Baristog Blog</a>
+          <a href="https://www.aageyseright.com/blog/bean-and-bread" target="_blank" class="case-link">Aagey Se Right</a>
+        </div>
+      </div>
+      <div class="strategy-card s1 reveal">
+        <span class="strategy-number">02</span>
+        <div class="strategy-icon">📱</div>
+        <h3 class="strategy-title">Social Media Content</h3>
+        <p class="strategy-body">Written and curated social content across hospitality, travel, automotive, sports, and lifestyle brands. Multiple platforms, multiple tones. Clients included Park Inn by Radisson, Samsung, Skoda, Kick Sports, and influencer accounts. Currently managing all social channels at Salford SU for 26,000+ students.</p>
+        <div class="strategy-tags">
+          <span class="strategy-tag">Instagram</span>
+          <span class="strategy-tag">TikTok</span>
+          <span class="strategy-tag">Multi-brand</span>
+          <span class="strategy-tag">Content Strategy</span>
+        </div>
+      </div>
+      <div class="strategy-card s2 reveal">
+        <span class="strategy-number">03</span>
+        <div class="strategy-icon">🌐</div>
+        <h3 class="strategy-title">Website Content</h3>
+        <p class="strategy-body">Full website copy for brands where the only brief was to make it feel right. Leam Music Academy: futuristic, informative, captivating. Responsible for content hierarchy, tone of voice, and how much content each section carries. The site is live.</p>
+        <div class="strategy-tags">
+          <span class="strategy-tag">Web Copywriting</span>
+          <span class="strategy-tag">Content Architecture</span>
+          <span class="strategy-tag">UX Writing</span>
+        </div>
+        <a href="https://www.leam.in" target="_blank" class="strategy-link">Visit leam.in</a>
+      </div>
+      <div class="strategy-card s4 reveal">
+        <span class="strategy-number">04</span>
+        <div class="strategy-icon">📧</div>
+        <h3 class="strategy-title">Email &amp; Comms</h3>
+        <p class="strategy-body">Student communications for Salford SU across email, website articles, digital screens, and on-site materials. Writing for a 26,000-strong student audience across different demographics: undergrad, postgrad, international. Same campaign, completely different tones.</p>
+        <div class="strategy-tags">
+          <span class="strategy-tag">Email Marketing</span>
+          <span class="strategy-tag">Audience Segmentation</span>
+          <span class="strategy-tag">MSL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STRATEGY TAB -->
+  <div class="tab-content" id="tab-strategy">
+    <div class="strategy-grid">
+      <div class="strategy-card s1 reveal">
+        <span class="strategy-number">01</span>
+        <div class="strategy-icon">📧</div>
+        <h3 class="strategy-title">Email Transformation</h3>
+        <p class="strategy-body">Inherited a flat, unsegmented email list with a 26% open rate at Salford SU. Diagnosed the core problem, restructured mailing lists through MSL, introduced subject line testing, tailored content by segment, and adjusted send timing. Open rates reached 39% in a single quarter, translating directly into stronger event attendance.</p>
+        <span class="strategy-metric">26% to 39% open rate · One quarter</span>
+        <div class="strategy-tags">
+          <span class="strategy-tag">MSL CRM</span>
+          <span class="strategy-tag">Segmentation</span>
+          <span class="strategy-tag">A/B Testing</span>
+        </div>
+      </div>
+      <div class="strategy-card s2 reveal">
+        <span class="strategy-number">02</span>
+        <div class="strategy-icon">🌐</div>
+        <h3 class="strategy-title">EMEA Website Redevelopment</h3>
+        <p class="strategy-body">Led a multi-agency website redevelopment across 10+ EMEA teams at ABC Digital. Responsible for content strategy, information architecture, UX writing, and coordinating external design agencies throughout. Primary liaison between stakeholders and delivery teams. 30% improvement in user engagement within three months of launch.</p>
+        <span class="strategy-metric">30% engagement uplift · 10+ EMEA teams</span>
+        <div class="strategy-tags">
+          <span class="strategy-tag">Project Management</span>
+          <span class="strategy-tag">UX Writing</span>
+          <span class="strategy-tag">EMEA</span>
+          <span class="strategy-tag">Agency Coordination</span>
+        </div>
+        <a href="https://app.abcdigital.com/Login" target="_blank" class="strategy-link">View ABC Digital</a>
+      </div>
+      <div class="strategy-card s3 reveal">
+        <span class="strategy-number">03</span>
+        <div class="strategy-icon">📺</div>
+        <h3 class="strategy-title">Campus Digital Screens</h3>
+        <p class="strategy-body">Built a campus-wide digital screens programme from zero at Salford SU. Designed evergreen content assets in Adobe Illustrator, deployed through Xibo across high-footfall campus locations. Created the content calendar and production workflow that gave the SU a consistent physical brand presence for the first time.</p>
+        <span class="strategy-metric">Built from zero · Campus-wide</span>
+        <div class="strategy-tags">
+          <span class="strategy-tag">Adobe Illustrator</span>
+          <span class="strategy-tag">Xibo</span>
+          <span class="strategy-tag">OOH Strategy</span>
+        </div>
+      </div>
+      <div class="strategy-card s4 reveal">
+        <span class="strategy-number">04</span>
+        <div class="strategy-icon">🎯</div>
+        <h3 class="strategy-title">Leam Music Academy</h3>
+        <p class="strategy-body">Full website content strategy for a next-gen music teaching platform. Single brief: make it futuristic, informative, captivating. Sole responsibility for layout decisions, content hierarchy, tone of voice, and how much content each section should carry, without UX or design support. Site is live.</p>
+        <span class="strategy-metric">Live site · Full content ownership</span>
+        <div class="strategy-tags">
+          <span class="strategy-tag">Web Copywriting</span>
+          <span class="strategy-tag">Content Architecture</span>
+          <span class="strategy-tag">EdTech</span>
+        </div>
+        <a href="https://www.leam.in" target="_blank" class="strategy-link">Visit leam.in</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NGO TAB -->
+  <div class="tab-content" id="tab-ngo">
+    <div style="margin-bottom:2px;">
+      <div class="case-card card-ngo wide reveal" style="aspect-ratio:unset; min-height:140px;">
+        <div class="case-card-bg" style="background:linear-gradient(135deg,#0a1a2e 0%,#0d3b6e 50%,#1a2e0a 100%);"></div>
+        <div class="case-card-overlay"></div>
+        <div class="case-card-content" style="position:relative; padding:40px 48px;">
+          <span class="case-tag" style="background:var(--pink);color:var(--black);">Purpose-driven Scriptwriting · NGO &amp; CSR</span>
+          <h3 class="case-title">Purpose Campaigns</h3>
+          <p class="case-meta">Scripted campaigns for organisations where the stakes are real. Gates Foundation, Save the Children, and ICICI Bank Foundation required a completely different approach to commercial work: emotional clarity over cleverness, trust over persuasion.</p>
+          <span class="case-stat">Global NGOs · CSR campaigns · Impact communication</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-grid-3 reveal">
+      <div>
+        <div style="padding:20px;background:#131313;">
+          <p style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--acid);margin-bottom:8px;">Save the Children</p>
+          <p style="font-size:13px;color:rgba(245,240,232,0.6);line-height:1.6;">Scripted a campaign for one of the world's largest children's rights organisations. The brief required both emotional weight and clarity of purpose.</p>
+        </div>
+        <div class="video-thumb"><iframe src="https://www.youtube.com/embed/dMrX5SZ-lxo" loading="lazy" allowfullscreen></iframe></div>
+      </div>
+      <div>
+        <div style="padding:20px;background:#131313;">
+          <p style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--acid);margin-bottom:8px;">Bill &amp; Melinda Gates Foundation</p>
+          <p style="font-size:13px;color:rgba(245,240,232,0.6);line-height:1.6;">Campaign scripted for the Gates Foundation. Global development communication demands precision and sincerity above everything else.</p>
+        </div>
+        <div class="video-thumb"><iframe src="https://www.youtube.com/embed/dw2y8t_HUAU" loading="lazy" allowfullscreen></iframe></div>
+      </div>
+      <div>
+        <div style="padding:20px;background:#131313;">
+          <p style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--acid);margin-bottom:8px;">ICICI Foundation x Sariska Forest</p>
+          <p style="font-size:13px;color:rgba(245,240,232,0.6);line-height:1.6;">CSR campaign for ICICI Bank Foundation's environmental initiative at Sariska. Purpose-driven corporate storytelling that goes beyond greenwashing.</p>
+        </div>
+        <div class="video-thumb"><iframe src="https://www.youtube.com/embed/0GUPUPxAcZE" loading="lazy" allowfullscreen></iframe></div>
+      </div>
+    </div>
+
+    <div style="margin-top:2px;">
+      <div style="padding:20px;background:#131313;">
+        <p style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--acid);margin-bottom:8px;">ICICI Bank Father's Day</p>
+        <p style="font-size:13px;color:rgba(245,240,232,0.6);line-height:1.6;">A father's commitment to his child's future, tied to the launch of ICICI's youth bank account.</p>
+      </div>
+      <div class="video-thumb" style="max-width:600px;"><iframe src="https://www.youtube.com/embed/7-jypq7uIoY" loading="lazy" allowfullscreen></iframe></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- SALFORD SU -->
+<section id="salford">
+  <div class="salford-inner">
+    <div class="reveal">
+      <span class="section-number">02 — Currently</span>
+      <h2 class="salford-employer">Salford<br>Students'<br>Union</h2>
+      <p class="salford-role">Marketing Coordinator</p>
+      <p class="salford-desc">Marketing communications for 26,000+ students across a full multi-channel programme. Every day is campaigns, content, events, data, and the occasional fire to put out.</p>
+    </div>
+    <ul class="achievements-list">
+      <li class="achievement-item reveal">
+        <span class="achievement-icon">📧</span>
+        <div class="achievement-text">
+          <h4>Email Strategy Overhaul</h4>
+          <p>Restructured the entire mailing approach through MSL. Audience segmentation, subject line testing, timing optimisation, and tailored content per student group.</p>
+          <span class="metric">26% to 39% open rate in one quarter</span>
+        </div>
+      </li>
+      <li class="achievement-item reveal">
+        <span class="achievement-icon">🎪</span>
+        <div class="achievement-text">
+          <h4>End-to-End Event Delivery</h4>
+          <p>Full event lifecycle ownership from concept to post-event review. Vendor negotiation, logistics, risk assessment, budget management. Delivered Salford SU Awards 2026 marcomms on top of a full existing campaign schedule.</p>
+          <span class="metric">Full programme ownership · Zero outsourcing</span>
+        </div>
+      </li>
+      <li class="achievement-item reveal">
+        <span class="achievement-icon">👥</span>
+        <div class="achievement-text">
+          <h4>Content Team Management</h4>
+          <p>Manage a team of 5 student content creators. Brief individually, review all outputs before publication, maintain editorial quality across Instagram, TikTok, and wider channels. Run the marketing working board.</p>
+          <span class="metric">5 direct reports · Multi-platform output</span>
+        </div>
+      </li>
+      <li class="achievement-item reveal">
+        <span class="achievement-icon">🖥️</span>
+        <div class="achievement-text">
+          <h4>Digital Screens Programme</h4>
+          <p>Built from scratch using Adobe Illustrator and Xibo. Evergreen assets deployed across campus. The first consistent physical brand presence the SU had across high-footfall areas.</p>
+          <span class="metric">Campus-wide · Built from zero</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- UNIVERSITY WORK -->
+<section id="university">
+  <div class="uni-inner">
+    <div class="section-header reveal">
+      <span class="section-number">03</span>
+      <h2 class="section-title">University Work</h2>
+    </div>
+    <div class="uni-grid">
+
+      <div class="uni-card reveal">
+        <div class="uni-card-bg" style="background:radial-gradient(ellipse at top right, #3d1a00 0%, transparent 70%);"></div>
+        <div class="uni-card-content">
+          <span class="uni-tag">MA Dissertation · University of Leeds · 2023 · Creative Direction</span>
+          <h3 class="uni-title">Subko — Beyond the Brew</h3>
+          <p class="uni-body">Full creative direction strategy for launching a Mumbai specialty coffee brand into the UK university market. Market research, PESTEL, competitor mapping, consumer journey maps, brand semiotics, and a complete brand extension with packaging, social media, and campus launch executions.</p>
+          <a href="subko.html" class="uni-cta">View Case Study</a>
+        </div>
+        <div style="margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1;">
+          <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:5px 10px;border:1px solid rgba(245,240,232,0.15);color:rgba(245,240,232,0.4);">Brand Strategy</span>
+          <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:5px 10px;border:1px solid rgba(245,240,232,0.15);color:rgba(245,240,232,0.4);">Creative Direction</span>
+          <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:5px 10px;border:1px solid rgba(245,240,232,0.15);color:rgba(245,240,232,0.4);">Market Research</span>
+          <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:5px 10px;border:1px solid rgba(245,240,232,0.15);color:rgba(245,240,232,0.4);">Brand Extension</span>
+        </div>
+      </div>
+
+      <div class="uni-card reveal" style="background:#0f0f0f;">
+        <div class="uni-card-bg" style="background:radial-gradient(ellipse at top right, #001a3d 0%, transparent 70%);"></div>
+        <div class="uni-card-content">
+          <span class="uni-tag">MA Module · University of Leeds · 2023 · Campaign Strategy</span>
+          <h3 class="uni-title">O2 Telefonica — Weather Hijack</h3>
+          <p class="uni-body">Brand strategy brief: get O2 in front of 16 to 30 year olds in a market where young people actively tune out telecoms advertising. Solution: weather-reactive digital billboards delivering contextual, cheeky copy tied to live conditions. "Together, Everywhere." Research, strategy, creative concept, and all copywriting done by me.</p>
+          <a href="o2.html" class="uni-cta">View Case Study</a>
+        </div>
+        <div style="margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1;">
+          <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:5px 10px;border:1px solid rgba(245,240,232,0.15);color:rgba(245,240,232,0.4);">OOH Strategy</span>
+          <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:5px 10px;border:1px solid rgba(245,240,232,0.15);color:rgba(245,240,232,0.4);">Copywriting</span>
+          <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:5px 10px;border:1px solid rgba(245,240,232,0.15);color:rgba(245,240,232,0.4);">Brand Strategy</span>
+          <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:5px 10px;border:1px solid rgba(245,240,232,0.15);color:rgba(245,240,232,0.4);">Contextual Media</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header reveal">
+    <span class="section-number">04</span>
+    <h2 class="section-title">About</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <span class="about-accent">"Writing has always been my first love."</span>
+      <p>I started with an English Literature degree in India, writing ad scripts and copy for agencies on the side. When I realised I was as much a strategist and visualiser as a writer, I did something about it: <strong>MA Advertising and Design at the University of Leeds.</strong></p>
+      <p>Since then I have scripted television commercials for national banks and global NGOs, led website projects across EMEA, built email programmes that moved measurable numbers, and managed marketing for one of the UK's largest student communities.</p>
+      <p>I work at the intersection of creative and strategic. Comfortable writing an ad script one day and presenting a data-backed content audit the next. That range is not a lack of focus. It is the point.</p>
+      <p>Currently based in Manchester. Open to mid to senior marketing, content strategy, and project leadership roles across the UK.</p>
+    </div>
+    <div class="reveal">
+      <div class="stats-grid">
+        <div class="stat-block">
+          <span class="stat-num">4+</span>
+          <p class="stat-label">Years in marketing and advertising</p>
+        </div>
+        <div class="stat-block">
+          <span class="stat-num">2M+</span>
+          <p class="stat-label">Views on digital campaigns</p>
+        </div>
+        <div class="stat-block">
+          <span class="stat-num">26K+</span>
+          <p class="stat-label">Students reached at Salford SU</p>
+        </div>
+        <div class="stat-block" style="background:var(--acid);">
+          <span class="stat-num" style="color:var(--black);">MA</span>
+          <p class="stat-label" style="color:rgba(10,10,10,0.6);">Advertising and Design, Leeds 2023</p>
+        </div>
+      </div>
+      <div class="skills-list" id="skillsList">
+        <div class="skills-row"><span class="skill-name">Campaign Strategy</span><div class="skill-bar"><div class="skill-fill" style="--pct:92%"></div></div></div>
+        <div class="skills-row"><span class="skill-name">Copywriting &amp; Scriptwriting</span><div class="skill-bar"><div class="skill-fill" style="--pct:95%"></div></div></div>
+        <div class="skills-row"><span class="skill-name">Email Marketing &amp; CRM</span><div class="skill-bar"><div class="skill-fill" style="--pct:85%"></div></div></div>
+        <div class="skills-row"><span class="skill-name">Project Leadership</span><div class="skill-bar"><div class="skill-fill" style="--pct:88%"></div></div></div>
+        <div class="skills-row"><span class="skill-name">Social Media Strategy</span><div class="skill-bar"><div class="skill-fill" style="--pct:90%"></div></div></div>
+        <div class="skills-row"><span class="skill-name">UX Writing &amp; Web Content</span><div class="skill-bar"><div class="skill-fill" style="--pct:80%"></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OUTSIDE WORK -->
+  <div style="margin-top:80px;" class="reveal">
+    <h3 style="font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--black);margin-bottom:8px;">Outside Work</h3>
+    <p style="font-size:16px;color:rgba(10,10,10,0.6);margin-bottom:0;">What I do when I am not doing marketing.</p>
+    <div class="outside-grid">
+      <div class="outside-card">
+        <div class="outside-icon">🍳</div>
+        <h4 class="outside-title">Recipe Blog</h4>
+        <p class="outside-body">Running a daily recipe blog because cooking is how I decompress. Equal parts obsessive about flavour and photographing it well.</p>
+        <a href="https://bitebandits.blogspot.com" target="_blank" class="outside-link">Visit Bite Bandits</a>
+      </div>
+      <div class="outside-card">
+        <div class="outside-icon">✈️</div>
+        <h4 class="outside-title">Travel</h4>
+        <p class="outside-body">Perpetually planning the next trip. Moving from India to Leeds to Manchester has only made the habit worse.</p>
+      </div>
+      <div class="outside-card">
+        <div class="outside-icon">✍️</div>
+        <h4 class="outside-title">Writing</h4>
+        <p class="outside-body">Poetry for myself. Journals that never get shared. Writing has always been how I process the world, not just how I earn a living.</p>
+      </div>
+      <div class="outside-card">
+        <div class="outside-icon">🗂️</div>
+        <h4 class="outside-title">Organisation</h4>
+        <p class="outside-body">Colour-coded calendars. Category-tagged tasks. Systems for everything. The chaos has to go somewhere.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-bg-text">HELLO</div>
+  <div class="contact-inner reveal">
+    <span class="contact-pre">Let's work together</span>
+    <h2 class="contact-headline">Got a brief?<br><em>Let's talk.</em></h2>
+    <a href="mailto:durvadalaluk@gmail.com" class="contact-email">durvadalaluk@gmail.com</a>
+    <div class="contact-ctas">
+      <a href="https://calendly.com/durvadalaluk/calls" target="_blank" class="btn-primary">Book a Call</a>
+      <a href="https://www.linkedin.com/in/durva-d-2850591bb/" target="_blank" class="btn-secondary">LinkedIn</a>
+    </div>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/durva-d-2850591bb/" target="_blank" class="social-link">LinkedIn</a>
+      <a href="https://bitebandits.blogspot.com" target="_blank" class="social-link">Bite Bandits</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-copy">© 2026 Durva Dalal · Manchester, UK</span>
+  <span class="footer-copy">Marketing · Strategy · Storytelling</span>
+</footer>
+
+<script>
+const cursor = document.getElementById('cursor');
+const follower = document.getElementById('cursorFollower');
+let mx=0,my=0,fx=0,fy=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cursor.style.left=mx-6+'px';
+  cursor.style.top=my-6+'px';
+});
+function animFollower(){
+  fx+=(mx-fx-20)*0.15;
+  fy+=(my-fy-20)*0.15;
+  follower.style.left=fx+'px';
+  follower.style.top=fy+'px';
+  requestAnimationFrame(animFollower);
+}
+animFollower();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.transform='scale(2)';follower.style.transform='scale(1.5)';});
+  el.addEventListener('mouseleave',()=>{cursor.style.transform='scale(1)';follower.style.transform='scale(1)';});
+});
+function switchTab(tab,btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  btn.classList.add('active');
+}
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(r=>observer.observe(r));
+const skillsObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)document.getElementById('skillsList').classList.add('visible');});
+},{threshold:0.5});
+const sl=document.getElementById('skillsList');
+if(sl)skillsObs.observe(sl);
+</script>
+</body>
+</html>

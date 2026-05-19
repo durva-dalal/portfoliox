@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subko — Creative Direction · Durva Dalal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f0e8;
+    --cream: #ede8dc;
+    --acid: #c8f000;
+    --coral: #ff5c3a;
+    --gold: #D4A373;
+    --ink: #1a1a2e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: difference;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10,10,10,0.9);
+    backdrop-filter: blur(10px);
+  }
+  .nav-back {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-back:hover { opacity: 1; }
+  .nav-back::before { content: '←'; }
+
+  .nav-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--white);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.4;
+  }
+
+  /* HERO */
+  .case-hero {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 160px 48px 80px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0d0608 0%, #1a0a0a 30%, #2a1500 60%, #1a0a0a 100%);
+  }
+
+  .case-hero::before {
+    content: 'SUBKO';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 280px;
+    font-weight: 900;
+    color: rgba(212,163,115,0.06);
+    pointer-events: none;
+    white-space: nowrap;
+    letter-spacing: -0.05em;
+  }
+
+  .case-tag-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+  }
+  .case-pill {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border: 1px solid rgba(212,163,115,0.4);
+    color: var(--gold);
+  }
+
+  .case-hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 6vw, 96px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 32px;
+  }
+  .case-hero-title em { font-style: italic; color: var(--gold); }
+
+  .case-hero-summary {
+    font-size: 18px;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.65);
+    max-width: 640px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* CONTENT */
+  .case-body { max-width: 960px; margin: 0 auto; padding: 80px 48px; }
+
+  .case-section { margin-bottom: 80px; }
+
+  .case-section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .case-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    line-height: 1.1;
+  }
+
+  .case-section p {
+    font-size: 16px;
+    line-height: 1.9;
+    color: rgba(245,240,232,0.7);
+    margin-bottom: 20px;
+  }
+  .case-section p strong { color: var(--white); }
+
+  /* METRICS */
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin: 48px 0;
+  }
+  .metric-block {
+    background: #131313;
+    padding: 40px 32px;
+    border-top: 3px solid var(--gold);
+  }
+  .metric-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .metric-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.4);
+    margin-top: 8px;
+  }
+
+  /* CONCEPTS */
+  .concepts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin: 40px 0;
+  }
+  .concept-card {
+    background: #131313;
+    padding: 40px 32px;
+  }
+  .concept-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .concept-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .concept-body {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.55);
+  }
+
+  /* DIVIDER */
+  .case-divider {
+    height: 1px;
+    background: rgba(245,240,232,0.08);
+    margin: 64px 0;
+  }
+
+  /* CTA */
+  .case-cta-section {
+    background: #0f0f0f;
+    padding: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 80px;
+  }
+  .case-cta-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .case-cta-text em { font-style: italic; color: var(--gold); }
+
+  .btn-gold {
+    background: var(--gold);
+    color: var(--black);
+    padding: 16px 36px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-left: 48px;
+  }
+  .btn-gold:hover {
+    background: var(--white);
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--coral);
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+    text-decoration: none;
+    margin-top: 48px;
+    transition: color 0.2s;
+  }
+  .back-btn:hover { color: var(--white); }
+  .back-btn::before { content: '←'; }
+
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 9997;
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav>
+  <a href="index.html" class="nav-back">Back to Portfolio</a>
+  <span class="nav-title">Durva Dalal</span>
+</nav>
+
+<section class="case-hero">
+  <div class="case-tag-row">
+    <span class="case-pill">MA Dissertation</span>
+    <span class="case-pill">University of Leeds</span>
+    <span class="case-pill">2023</span>
+    <span class="case-pill">Creative Direction</span>
+  </div>
+  <h1 class="case-hero-title">Subko —<br><em>Beyond the Brew</em></h1>
+  <p class="case-hero-summary">A full creative direction strategy for launching a Mumbai specialty coffee brand into the UK university market. Market research, brand strategy, consumer journey mapping, and a complete brand extension — from concept to executions.</p>
+</section>
+
+<div class="case-body">
+
+  <div class="case-section">
+    <span class="case-section-label">The Brief</span>
+    <h2 class="case-section-title">An Indian coffee brand wants into the UK</h2>
+    <p>Subko is a specialty coffee roastery and bakehouse founded in Mumbai in 2020. Known for its authenticity and rapid growth in India, the brand wanted to penetrate the UK market and raise awareness of Indian coffee — a product category that, despite India being the 8th largest coffee producer globally, has almost no recognition abroad.</p>
+    <p>The challenge: the UK coffee market is worth <strong>£11.3 billion</strong>, dominated by Costa, Starbucks, Greggs, and Caffe Nero. Premium pricing, cultural unfamiliarity, and fierce competition all stood in the way. My task was to develop a full creative direction for how Subko could enter, starting with UK university campuses.</p>
+  </div>
+
+  <div class="metrics-row">
+    <div class="metric-block">
+      <span class="metric-num">£11.3B</span>
+      <p class="metric-label">UK coffee market value</p>
+    </div>
+    <div class="metric-block">
+      <span class="metric-num">65%</span>
+      <p class="metric-label">UK consumers who prioritise sustainability</p>
+    </div>
+    <div class="metric-block">
+      <span class="metric-num">8th</span>
+      <p class="metric-label">India's global coffee export ranking</p>
+    </div>
+  </div>
+
+  <div class="case-divider"></div>
+
+  <div class="case-section">
+    <span class="case-section-label">Research Process</span>
+    <h2 class="case-section-title">Understand the market before touching the creative</h2>
+    <p>The research covered PESTEL analysis, full competitor mapping (Costa, Starbucks, Caffe Nero, Pret, Greggs), a category map plotting accessibility against sustainability, and a semiotic analysis of how existing brands communicate visually and linguistically.</p>
+    <p>Key finding: the market gap is <strong>high sustainability + high accessibility</strong>. Every brand that prioritises sustainability is niche and hard to find. Every brand that is widely accessible has weak sustainability credentials. Subko's opportunity was to own that intersection.</p>
+    <p>I also identified a core weakness in Subko's existing brand: despite being an Indian coffee company, the brand identity barely reflected Indian culture. French-inspired food menu, no Indian aesthetics, Western ambiance. The UK entry was an opportunity to fix that, not replicate it.</p>
+  </div>
+
+  <div class="case-divider"></div>
+
+  <div class="case-section">
+    <span class="case-section-label">Creative Concepts</span>
+    <h2 class="case-section-title">Three routes. One final direction.</h2>
+    <div class="concepts-grid">
+      <div class="concept-card">
+        <span class="concept-num">Concept 01</span>
+        <h4 class="concept-name">"Brewed in Tradition"</h4>
+        <p class="concept-body">Heritage-led. The journey of Indian coffee beans from plantation to cup. Storytelling, visuals, and experiential marketing grounded in authenticity.</p>
+      </div>
+      <div class="concept-card">
+        <span class="concept-num">Concept 02</span>
+        <h4 class="concept-name">"Sustainability on the Go"</h4>
+        <p class="concept-body">Eco-first. Sustainable sourcing, fair trade, eco-conscious packaging made accessible to busy students. Partners with environmental influencers.</p>
+      </div>
+      <div class="concept-card">
+        <span class="concept-num">Concept 03</span>
+        <h4 class="concept-name">"A Taste of India"</h4>
+        <p class="concept-body">Experiential. Region-specific blends, pop-up events, and tasting sessions bringing India's diverse coffee culture to UK campuses.</p>
+      </div>
+    </div>
+    <p>The final direction, <strong>"Beyond the Brew"</strong>, synthesised all three: Indian coffee as a cultural experience that is also sustainable and accessible. Not just a drink, but a journey. Strategic objective: transform consumer perception of Indian coffee from unknown to aspirational.</p>
+  </div>
+
+  <div class="case-divider"></div>
+
+  <div class="case-section">
+    <span class="case-section-label">Brand Extension</span>
+    <h2 class="case-section-title">Desi Brew by Subko</h2>
+    <p>Rather than importing Subko wholesale into the UK, I developed a brand extension: <strong>Subko's Desi Brew</strong>. A sub-brand tailored for the UK university market that could carry Indian cultural identity without the disconnection of the parent brand's more Western-inflected aesthetic.</p>
+    <p>The brand identity used a custom logotype blending Latin and Devanagari scripts, an earthy colour palette, Indian folk-art-inspired patterns, and a brand personality described as: <em>disruptive, Indian, innovative</em>. Slogan: "Soil to Soul."</p>
+    <p>Executions included: campus poster campaigns ("Naan-Stop Flavour Meters Away," "Desi over Deli"), a collapsible stainless steel reusable mug with Indian patterns, seed-embedded takeaway cups ("Soil it After You Sip It"), a loyalty stamp card, and a mock Instagram page showing how social content would look at scale.</p>
+  </div>
+
+  <div class="case-divider"></div>
+
+  <div class="case-section">
+    <span class="case-section-label">Launch Strategy</span>
+    <h2 class="case-section-title">Small corner cafes. Big campus presence.</h2>
+    <p>The market entry strategy recommended opening small, low-cost corner cafes within UK university campuses rather than high-street venues. Cost-efficient, high footfall, and directly accessible to the target demographic — 18 to 35 year old Gen-Z and Millennial students already open to new experiences.</p>
+    <p>Marketing touchpoints covered campus entrances, library study areas, gyms, and event spaces. Campaign tactics included student ambassador programmes, loyalty schemes, interactive brand awareness events, and targeted social media.</p>
+  </div>
+
+  <div class="case-cta-section">
+    <h3 class="case-cta-text">Want to read<br>the <em>full strategy?</em></h3>
+    <a href="SubkoFinal2.pdf" target="_blank" class="btn-gold">Download Full PDF</a>
+  </div>
+
+  <a href="index.html" class="back-btn">Back to all work</a>
+
+</div>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX - 6 + 'px';
+    cursor.style.top = e.clientY - 6 + 'px';
+  });
+</script>
+</body>
+</html>

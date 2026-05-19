@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>O2 Telefonica — Weather Hijack · Durva Dalal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:#0a0a0a;
+  --white:#f5f0e8;
+  --o2blue:#003A70;
+  --o2light:#0066CC;
+  --acid:#c8f000;
+  --coral:#ff5c3a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:none;}
+.cursor{width:12px;height:12px;background:var(--o2light);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;mix-blend-mode:difference;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px 48px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,10,0.9);backdrop-filter:blur(10px);}
+.nav-back{font-family:'Space Mono',monospace;font-size:11px;color:var(--white);text-decoration:none;letter-spacing:0.12em;text-transform:uppercase;opacity:0.7;transition:opacity 0.2s;display:flex;align-items:center;gap:8px;}
+.nav-back:hover{opacity:1;}
+.nav-back::before{content:'←';}
+.nav-title{font-family:'Space Mono',monospace;font-size:11px;color:var(--white);letter-spacing:0.15em;text-transform:uppercase;opacity:0.4;}
+
+.case-hero{min-height:80vh;display:flex;flex-direction:column;justify-content:flex-end;padding:160px 48px 80px;position:relative;overflow:hidden;background:#000d1a;}
+.case-hero::before{content:'O2';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Playfair Display',serif;font-size:400px;font-weight:900;color:rgba(0,58,112,0.15);pointer-events:none;white-space:nowrap;letter-spacing:-0.05em;}
+
+/* animated rain */
+.rain-container{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.raindrop{position:absolute;width:1px;background:linear-gradient(to bottom,transparent,rgba(0,102,204,0.4));animation:fall linear infinite;}
+@keyframes fall{from{transform:translateY(-100px);}to{transform:translateY(110vh);}}
+
+.case-tag-row{display:flex;gap:12px;margin-bottom:32px;position:relative;z-index:1;flex-wrap:wrap;}
+.case-pill{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:6px 14px;border:1px solid rgba(0,102,204,0.5);color:#4d9fff;}
+.case-hero-title{font-family:'Playfair Display',serif;font-size:clamp(48px,6vw,96px);font-weight:900;line-height:0.95;letter-spacing:-0.03em;position:relative;z-index:1;margin-bottom:32px;}
+.case-hero-title em{font-style:italic;color:#4d9fff;}
+.case-hero-summary{font-size:18px;line-height:1.8;color:rgba(245,240,232,0.65);max-width:640px;position:relative;z-index:1;}
+
+.case-body{max-width:1100px;margin:0 auto;padding:80px 48px;}
+.case-section{margin-bottom:80px;}
+.case-section-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#4d9fff;margin-bottom:24px;display:block;}
+.case-section-title{font-family:'Playfair Display',serif;font-size:40px;font-weight:900;margin-bottom:24px;line-height:1.1;}
+.case-section p{font-size:16px;line-height:1.9;color:rgba(245,240,232,0.7);margin-bottom:20px;}
+.case-section p strong{color:var(--white);}
+
+.metrics-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:48px 0;}
+.metric-block{background:#0d1a2e;padding:40px 32px;border-top:3px solid #4d9fff;}
+.metric-num{font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:#4d9fff;line-height:1;}
+.metric-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,240,232,0.4);margin-top:8px;}
+
+/* BILLBOARD MOCKUPS */
+.billboard-section{margin:48px 0;}
+.billboard-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:2px;}
+.billboard{background:#0d1a2e;aspect-ratio:9/16;display:flex;flex-direction:column;justify-content:space-between;padding:24px;position:relative;overflow:hidden;border:1px solid rgba(0,102,204,0.2);}
+.billboard::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top,rgba(0,102,204,0.15) 0%,transparent 70%);}
+.billboard-weather{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,240,232,0.4);position:relative;z-index:1;}
+.billboard-temp{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;color:#4d9fff;line-height:1;position:relative;z-index:1;}
+.billboard-copy{font-family:'DM Sans',sans-serif;font-size:clamp(14px,1.5vw,20px);font-weight:600;line-height:1.3;color:var(--white);position:relative;z-index:1;}
+.billboard-tag{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:#4d9fff;position:relative;z-index:1;}
+.o2-logo{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:#fff;position:relative;z-index:1;}
+
+.wide-billboard{background:#0a1520;padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-bottom:2px;border:1px solid rgba(0,102,204,0.2);}
+.wide-billboard-left{}
+.wide-billboard-weather{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,240,232,0.4);margin-bottom:16px;}
+.wide-billboard-temp{font-family:'Playfair Display',serif;font-size:96px;font-weight:900;color:#4d9fff;line-height:1;margin-bottom:16px;}
+.wide-billboard-copy{font-family:'DM Sans',sans-serif;font-size:28px;font-weight:600;line-height:1.3;color:var(--white);}
+.wide-billboard-right{display:flex;flex-direction:column;justify-content:space-between;height:100%;}
+.wide-billboard-platform{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,240,232,0.4);}
+.wide-billboard-hashtag{font-family:'Space Mono',monospace;font-size:14px;color:#4d9fff;letter-spacing:0.1em;}
+
+.case-divider{height:1px;background:rgba(245,240,232,0.08);margin:64px 0;}
+.case-cta-section{background:#0d1a2e;padding:64px;display:flex;justify-content:space-between;align-items:center;margin-top:80px;}
+.case-cta-text{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;line-height:1.2;}
+.case-cta-text em{font-style:italic;color:#4d9fff;}
+.btn-blue{background:#0066CC;color:var(--white);padding:16px 36px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;font-weight:700;transition:all 0.2s;white-space:nowrap;flex-shrink:0;margin-left:48px;}
+.btn-blue:hover{background:#4d9fff;transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--coral);}
+.back-btn{display:inline-flex;align-items:center;gap:10px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,240,232,0.5);text-decoration:none;margin-top:48px;transition:color 0.2s;}
+.back-btn:hover{color:var(--white);}
+.back-btn::before{content:'←';}
+
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");opacity:0.4;pointer-events:none;z-index:9997;}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav>
+  <a href="index.html" class="nav-back">Back to Portfolio</a>
+  <span class="nav-title">Durva Dalal</span>
+</nav>
+
+<section class="case-hero">
+  <div class="rain-container" id="rain"></div>
+  <div class="case-tag-row">
+    <span class="case-pill">MA Module</span>
+    <span class="case-pill">University of Leeds</span>
+    <span class="case-pill">2023</span>
+    <span class="case-pill">Campaign Strategy &amp; Copywriting</span>
+  </div>
+  <h1 class="case-hero-title">O2 Telefonica<br><em>Together, Everywhere</em></h1>
+  <p class="case-hero-summary">A brand strategy and campaign concept for O2 Telefonica, built to reach 16 to 30 year olds in a market where young people actively ignore telecoms advertising. The solution: weather-reactive outdoor billboards that earn attention by being genuinely useful.</p>
+</section>
+
+<div class="case-body">
+
+  <div class="case-section">
+    <span class="case-section-label">The Brief</span>
+    <h2 class="case-section-title">Get O2 noticed by people who scroll past everything</h2>
+    <p>The Telecommunications brief set by the University of Leeds MA programme asked students to pick a brand from the sector, identify a real problem it was facing, and develop a creative solution using at least three media channels.</p>
+    <p>I chose <strong>O2 Telefonica</strong>. The problem I identified: O2's marketing campaigns were successfully reaching older demographics and driving brand awareness among established customers, but the 16 to 30 year old segment was increasingly brand-unaware. The company's own marketing was actually attracting older audiences and reinforcing that perception gap.</p>
+    <p>The challenge was to raise brand awareness and value perception among a younger audience without alienating O2's existing base, and without producing another forgettable telecoms ad.</p>
+  </div>
+
+  <div class="metrics-row">
+    <div class="metric-block">
+      <span class="metric-num">16-30</span>
+      <p class="metric-label">Target age range, underserved by existing campaigns</p>
+    </div>
+    <div class="metric-block">
+      <span class="metric-num">3</span>
+      <p class="metric-label">Media channels used in the campaign execution</p>
+    </div>
+    <div class="metric-block">
+      <span class="metric-num">OOH</span>
+      <p class="metric-label">Primary channel, weather-reactive digital billboards</p>
+    </div>
+  </div>
+
+  <div class="case-divider"></div>
+
+  <div class="case-section">
+    <span class="case-section-label">The Insight</span>
+    <h2 class="case-section-title">Together, Everywhere — but only when it matters</h2>
+    <p>The strategic insight came from looking at what young people actually engage with in public spaces. They tune out static advertising. They engage with things that feel relevant to the exact moment they are in.</p>
+    <p><strong>Weather is the most universally shared real-time experience.</strong> Everyone in a city is experiencing the same weather simultaneously. It creates an instant moment of common ground, which is the perfect vehicle for a brand whose platform is "Together, Everywhere."</p>
+    <p>The concept: digital outdoor billboards that read live weather data and serve contextual copy tailored to whatever conditions exist at that exact moment. Cold and rainy? The ad acknowledges it and makes O2's connectivity feel like the warm constant. Hot and sunny? Different tone, same message. The billboard talks to you about the moment you are actually in.</p>
+  </div>
+
+  <div class="case-divider"></div>
+
+  <div class="case-section">
+    <span class="case-section-label">The Executions</span>
+    <h2 class="case-section-title">Copy that responds to conditions</h2>
+    <p>All copywriting below is mine. Each execution was written to feel human, not corporate, with O2's tone: warm, confident, quietly witty.</p>
+  </div>
+
+  <!-- BILLBOARD MOCKUPS -->
+  <div class="billboard-section">
+    <div class="billboard-grid">
+      <div class="billboard">
+        <div>
+          <p class="billboard-weather">Current Weather</p>
+          <p class="billboard-temp">5°C</p>
+        </div>
+        <p class="billboard-copy">"It's cold out there. Your signal shouldn't be."</p>
+        <div>
+          <p class="billboard-tag">#TogetherEverywhere</p>
+          <p class="o2-logo">O2</p>
+        </div>
+      </div>
+      <div class="billboard">
+        <div>
+          <p class="billboard-weather">Current Weather</p>
+          <p class="billboard-temp">18°C</p>
+        </div>
+        <p class="billboard-copy">"Perfect day to actually use your unlimited plans."</p>
+        <div>
+          <p class="billboard-tag">#TogetherEverywhere</p>
+          <p class="o2-logo">O2</p>
+        </div>
+      </div>
+      <div class="billboard">
+        <div>
+          <p class="billboard-weather">Current Weather</p>
+          <p class="billboard-temp">Heavy Rain</p>
+        </div>
+        <p class="billboard-copy">"Nowhere to be. Unlimited data. Sounds like a plan."</p>
+        <div>
+          <p class="billboard-tag">#TogetherEverywhere</p>
+          <p class="o2-logo">O2</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="wide-billboard">
+      <div class="wide-billboard-left">
+        <p class="wide-billboard-weather">Current Conditions · Manchester · Overcast</p>
+        <p class="wide-billboard-temp">-2°C</p>
+        <p class="wide-billboard-copy">"The weather's unpredictable. Your connection shouldn't be."</p>
+      </div>
+      <div class="wide-billboard-right">
+        <p class="wide-billboard-platform">Digital OOH · High Footfall Locations · Live Data Feed</p>
+        <div>
+          <p class="wide-billboard-hashtag">#TogetherEverywhere</p>
+          <p class="o2-logo" style="font-size:48px;margin-top:8px;">O2</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="billboard-grid">
+      <div class="billboard" style="aspect-ratio:4/3;">
+        <div>
+          <p class="billboard-weather">Current Weather</p>
+          <p class="billboard-temp">Cloudy</p>
+        </div>
+        <p class="billboard-copy">"Dull outside. Anything but on your phone."</p>
+        <div>
+          <p class="billboard-tag">#TogetherEverywhere</p>
+          <p class="o2-logo">O2</p>
+        </div>
+      </div>
+      <div class="billboard" style="aspect-ratio:4/3;">
+        <div>
+          <p class="billboard-weather">Current Weather</p>
+          <p class="billboard-temp">Sunny 22°C</p>
+        </div>
+        <p class="billboard-copy">"Everyone's outside. Stay connected either way."</p>
+        <div>
+          <p class="billboard-tag">#TogetherEverywhere</p>
+          <p class="o2-logo">O2</p>
+        </div>
+      </div>
+      <div class="billboard" style="aspect-ratio:4/3;">
+        <div>
+          <p class="billboard-weather">Current Weather</p>
+          <p class="billboard-temp">Windy</p>
+        </div>
+        <p class="billboard-copy">"Unpredictable out there. O2's got you covered in here."</p>
+        <div>
+          <p class="billboard-tag">#TogetherEverywhere</p>
+          <p class="o2-logo">O2</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-divider"></div>
+
+  <div class="case-section">
+    <span class="case-section-label">Media Strategy</span>
+    <h2 class="case-section-title">Three channels, one idea</h2>
+    <p>The campaign used three channels working in alignment rather than running parallel executions that happened to share a logo.</p>
+    <p><strong>Digital OOH (primary):</strong> Weather-reactive billboards in high-footfall urban areas and near university campuses. Powered by live weather API data. Copy changes automatically based on temperature, precipitation, and conditions. The billboard is always current, always relevant.</p>
+    <p><strong>Social media (extension):</strong> Time-stamped posts that mirror the billboard copy for the exact weather conditions at the time of posting. Creates a sense of the brand being present and paying attention, in the same moment as the audience.</p>
+    <p><strong>Visual and hijack campaign (supporting):</strong> Secondary executions using the same weather data logic in print and digital. "Hijacking" existing weather-related moments, from weather app interfaces to transport screens, to place O2's message inside a context users are already paying attention to.</p>
+  </div>
+
+  <div class="case-cta-section">
+    <h3 class="case-cta-text">Read the<br><em>full portfolio.</em></h3>
+    <a href="TELECOMMUNICATION_PORTFOLIO.pdf" target="_blank" class="btn-blue">Download PDF</a>
+  </div>
+
+  <a href="index.html" class="back-btn">Back to all work</a>
+
+</div>
+
+<script>
+const cursor=document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{
+  cursor.style.left=e.clientX-6+'px';
+  cursor.style.top=e.clientY-6+'px';
+});
+
+// Rain animation
+const rain=document.getElementById('rain');
+for(let i=0;i<60;i++){
+  const drop=document.createElement('div');
+  drop.className='raindrop';
+  drop.style.left=Math.random()*100+'%';
+  drop.style.height=Math.random()*80+40+'px';
+  drop.style.animationDuration=Math.random()*1+0.8+'s';
+  drop.style.animationDelay=Math.random()*2+'s';
+  drop.style.opacity=Math.random()*0.4+0.1;
+  rain.appendChild(drop);
+}
+</script>
+</body>
+</html>
