@@ -6,32 +6,44 @@
 <title>On the Page — Durva Dalal</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#0C0800;--ink2:#160f00;--ink3:#1e1500;--warm:#FAF4E8;--cream:#F0E6CC;--pink:#E8195A;--yellow:#F0DC00;--green:#00B84C;--muted:rgba(250,244,232,0.45);}
+:root{--ink:#0C0800;--ink2:#160f00;--ink3:#1e1500;--warm:#FAF4E8;--pink:#E8195A;--yellow:#F0DC00;--green:#00B84C;--muted:rgba(250,244,232,0.45);--gap:2px;}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{background:var(--ink);color:var(--warm);font-family:'DM Sans',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
 img{display:block;max-width:100%;}
 a{color:inherit;text-decoration:none;}
-@media(hover:hover) and (pointer:fine){body{cursor:none;}.cur{position:fixed;z-index:9999;pointer-events:none;top:0;left:0;width:12px;height:12px;border-radius:50%;background:var(--yellow);transform:translate(-50%,-50%);transition:transform .15s,background .15s,width .2s,height .2s;mix-blend-mode:difference;}.cur.e{width:40px;height:40px;}.cur.p{background:var(--pink);transform:translate(-50%,-50%) scale(.7);}a,button{cursor:none;}}
-
-nav{position:fixed;inset-inline:0;top:0;z-index:300;display:flex;justify-content:space-between;align-items:center;padding:18px 48px;background:rgba(12,8,0,.9);backdrop-filter:blur(18px);}
+@media(hover:hover) and (pointer:fine){body{cursor:none;}.cur{position:fixed;z-index:9999;pointer-events:none;top:0;left:0;width:12px;height:12px;border-radius:50%;background:var(--yellow);transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:difference;}.cur.e{width:40px;height:40px;opacity:.18;}.cur.p{width:8px;height:8px;}a,button{cursor:none;}}
+nav{position:fixed;inset-inline:0;top:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:18px 48px;background:rgba(12,8,0,.92);backdrop-filter:blur(18px);}
 .n-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;}
 .n-logo b{color:var(--yellow);font-style:italic;}
 .n-back{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.45;transition:opacity .2s;display:flex;align-items:center;gap:6px;}
 .n-back:hover{opacity:1;}
 .n-back::before{content:'←';}
-.n-links{display:flex;gap:28px;list-style:none;}
-.n-links a{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.45;transition:opacity .2s;}
+.n-right{display:flex;align-items:center;gap:28px;}
+.n-links{display:flex;gap:20px;list-style:none;}
+.n-links a{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;opacity:.45;transition:opacity .2s;}
 .n-links a:hover,.n-links a.on{opacity:1;}
-.n-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;}
-.n-burger span{display:block;width:20px;height:1.5px;background:var(--warm);transition:all .3s;}
-.mmenu{display:none;position:fixed;inset:0;top:60px;background:rgba(12,8,0,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:24px;z-index:299;}
-.mmenu.s{display:flex;}
-.mmenu a{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;opacity:.5;transition:opacity .2s,color .2s;}
-.mmenu a:hover{opacity:1;color:var(--yellow);}
+.n-btn{background:none;border:none;padding:0;display:flex;flex-direction:column;gap:5px;}
+.n-btn span{display:block;width:22px;height:1.5px;background:var(--warm);transition:all .3s;}
+.fmenu{display:none;position:fixed;inset:0;z-index:490;background:var(--ink2);flex-direction:column;justify-content:center;padding:60px 10vw;}
+.fmenu.on{display:flex;}
+.fmenu-links{display:flex;flex-direction:column;gap:4px;margin-bottom:48px;}
+.fmenu-links a{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,60px);font-weight:600;line-height:1.15;opacity:.15;transition:opacity .3s,transform .3s;transform:translateX(-16px);}
+.fmenu-links a:hover{opacity:1;transform:translateX(0);}
+.fmenu-bottom{display:flex;flex-wrap:wrap;gap:12px;align-items:center;border-top:1px solid rgba(250,244,232,.08);padding-top:28px;}
+.fmenu-action{display:inline-flex;align-items:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:11px 22px;transition:all .25s;white-space:nowrap;}
+.fmenu-action.pink{background:var(--pink);color:#fff;font-weight:700;}
+.fmenu-action.pink:hover{background:#ff4d7a;}
+.fmenu-action.yellow{background:var(--yellow);color:var(--ink);font-weight:700;}
+.fmenu-action.yellow:hover{background:#ffe133;}
+.fmenu-action.ghost{border:1px solid rgba(250,244,232,.2);color:var(--warm);}
+.fmenu-action.ghost:hover{border-color:var(--warm);}
+.fmenu-hint{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:rgba(250,244,232,.18);margin-top:14px;}
 
 .ph{min-height:55svh;display:flex;flex-direction:column;justify-content:flex-end;padding:140px 48px 64px;position:relative;overflow:hidden;}
-.ph-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,#1a1200 0%,#0a0a00 50%,var(--ink) 100%);}
+.ph-bg{position:absolute;inset:0;background:#0c0a00;}
+.ph-bg::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,transparent,transparent 64px,rgba(240,220,0,.025) 64px,rgba(240,220,0,.025) 65px),repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(240,220,0,.025) 28px,rgba(240,220,0,.025) 29px);}
+.ph-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,rgba(240,220,0,.08) 0%,transparent 60%);}
 .ph-eye{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--yellow);margin-bottom:20px;display:block;position:relative;z-index:1;}
 .ph-title{font-family:'Cormorant Garamond',serif;font-size:clamp(56px,7vw,96px);font-weight:700;line-height:.88;letter-spacing:-.02em;position:relative;z-index:1;margin-bottom:20px;}
 .ph-title em{color:var(--yellow);}
@@ -39,10 +51,10 @@ nav{position:fixed;inset-inline:0;top:0;z-index:300;display:flex;justify-content
 
 .content{padding:0 48px 80px;}
 .inn{max-width:1280px;margin:0 auto;}
-.sec-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:48px 0 24px;display:flex;align-items:center;gap:20px;}
-.sec-label::after{content:'';flex:1;height:1px;background:rgba(250,244,232,.08);}
+.sec-l{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:48px 0 24px;display:flex;align-items:center;gap:20px;}
+.sec-l::after{content:'';flex:1;height:1px;background:rgba(250,244,232,.07);}
 
-/* WRITING ACCORDIONS */
+/* WRITING ACCORDION */
 .piece{border-bottom:1px solid rgba(250,244,232,.07);overflow:hidden;}
 .piece-head{display:flex;align-items:center;justify-content:space-between;padding:24px 0;gap:16px;}
 .piece-head:hover{opacity:.85;}
@@ -51,44 +63,53 @@ nav{position:fixed;inset-inline:0;top:0;z-index:300;display:flex;justify-content
 .t-blog{background:var(--yellow);color:var(--ink);}
 .t-web{background:var(--green);color:var(--ink);}
 .piece-name{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2vw,26px);font-weight:600;line-height:1.1;}
-.piece-arrow{width:32px;height:32px;border-radius:50%;border:1px solid rgba(250,244,232,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s;font-size:16px;line-height:1;}
-.piece.open .piece-arrow{background:var(--yellow);border-color:var(--yellow);transform:rotate(45deg);color:var(--ink);}
+.piece-arrow{width:32px;height:32px;border-radius:50%;border:1px solid rgba(250,244,232,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s;font-size:18px;line-height:1;}
+.piece.open .piece-arrow{background:var(--yellow);border-color:var(--yellow);color:var(--ink);transform:rotate(45deg);}
 .piece-body{max-height:0;overflow:hidden;transition:max-height .5s ease;}
-.piece.open .piece-body{max-height:400px;}
-.piece-inner{padding:0 0 32px;}
+.piece.open .piece-body{max-height:300px;}
+.piece-inner{padding:0 0 28px;}
 .piece-desc{font-size:14px;line-height:1.8;color:var(--muted);max-width:600px;margin-bottom:16px;}
 .piece-link{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:1px;display:inline-block;}
 
-/* SOCIAL MEDIA ACCORDION CATEGORIES */
+/* SOCIAL CATEGORY ACCORDION */
 .cat{border-bottom:1px solid rgba(250,244,232,.07);overflow:hidden;}
-.cat-head{display:flex;align-items:center;justify-content:space-between;padding:24px 0;gap:16px;}
+.cat-head{display:flex;align-items:center;justify-content:space-between;padding:22px 0;gap:16px;}
 .cat-head:hover{opacity:.85;}
 .cat-hl{display:flex;align-items:center;gap:16px;flex:1;}
 .cat-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
 .cat-name{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2vw,26px);font-weight:600;}
 .cat-count{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.1em;color:var(--muted);flex-shrink:0;}
-.cat-arrow{width:32px;height:32px;border-radius:50%;border:1px solid rgba(250,244,232,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s;font-size:16px;line-height:1;}
+.cat-arrow{width:32px;height:32px;border-radius:50%;border:1px solid rgba(250,244,232,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s;font-size:18px;line-height:1;}
 .cat.open .cat-arrow{transform:rotate(45deg);}
 .cat-body{max-height:0;overflow:hidden;transition:max-height .45s ease;}
 .cat.open .cat-body{max-height:600px;}
-.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:0 0 28px;}
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);padding-bottom:28px;}
 .bt{background:var(--ink3);padding:20px 24px;transition:background .3s;}
 .bt:hover{background:rgba(250,244,232,.07);}
 .bt-dot{width:6px;height:6px;border-radius:50%;margin-bottom:8px;}
 .bt-name{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;margin-bottom:3px;}
 .bt-role{font-size:12px;color:var(--muted);}
 
-footer{background:#080500;padding:22px 48px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:center;}
+/* ACT LINKS */
+.act-nav{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);margin:64px 0 0;}
+.an{background:var(--ink2);padding:36px 40px;text-decoration:none;color:var(--warm);display:flex;flex-direction:column;border-top:3px solid transparent;transition:all .3s;}
+.an:hover{background:var(--ink3);}
+.an.next{border-top-color:var(--pink);text-align:right;}
+.an.prev{border-top-color:var(--green);}
+.an-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;opacity:.4;margin-bottom:10px;}
+.an-title{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,2.5vw,32px);font-weight:700;}
+.an.next .an-title::after{content:' →';}
+.an.prev .an-title::before{content:'← ';}
+
+footer{background:#080500;padding:20px 48px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:center;}
 .ft{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.1em;color:rgba(250,244,232,.15);text-transform:uppercase;}
-.ft-back{color:var(--yellow);display:flex;align-items:center;gap:5px;}
-.ft-back::before{content:'←';}
 
 .r{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
 .r.v{opacity:1;transform:translateY(0);}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");opacity:.6;}
 
-@media(max-width:900px){nav{padding:14px 20px;}.n-links{display:none;}.n-burger{display:flex;}.ph{padding:100px 24px 48px;}.content{padding:0 20px 56px;}.cat-grid{grid-template-columns:1fr 1fr;}footer{padding:20px;justify-content:center;text-align:center;}}
-@media(max-width:480px){.ph-title{font-size:clamp(44px,13vw,64px);}.cat-grid{grid-template-columns:1fr;}}
+@media(max-width:900px){nav{padding:14px 20px;}.n-links{display:none;}.ph{padding:100px 24px 48px;}.content{padding:0 20px 56px;}.cat-grid{grid-template-columns:1fr 1fr;}.act-nav{grid-template-columns:1fr;}footer{padding:16px 20px;justify-content:center;text-align:center;}}
+@media(max-width:480px){.ph-title{font-size:clamp(44px,12vw,64px);}.cat-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -96,19 +117,35 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;b
 <nav>
   <a href="index.html" class="n-back">Home</a>
   <a href="index.html" class="n-logo">Durva <b>Dalal.</b></a>
-  <ul class="n-links">
-    <li><a href="onscreen.html">On Screen</a></li>
-    <li><a href="onground.html">On the Ground</a></li>
-    <li><a href="onpage.html" class="on">On the Page</a></li>
-    <li><a href="index.html#contact">Contact</a></li>
-  </ul>
-  <button class="n-burger" id="nb" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="n-right">
+    <ul class="n-links">
+      <li><a href="onscreen.html">On Screen</a></li>
+      <li><a href="onground.html">On the Ground</a></li>
+      <li><a href="onpage.html" class="on">On the Page</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="n-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
-<div class="mmenu" id="mm">
-  <a href="index.html">Home</a>
-  <a href="onscreen.html">On Screen</a>
-  <a href="onground.html">On the Ground</a>
-  <a href="index.html#contact">Contact</a>
+<div class="fmenu" id="fmenu" aria-hidden="true">
+  <div class="fmenu-links">
+    <a href="index.html">Home</a>
+    <a href="onscreen.html">On Screen</a>
+    <a href="onground.html">On the Ground</a>
+    <a href="onpage.html">On the Page</a>
+    <a href="index.html#currently">Currently</a>
+    <a href="subko.html">Subko</a>
+    <a href="o2.html">O2</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+  <div class="fmenu-bottom">
+    <a href="https://calendly.com/durvadalaluk/calls" target="_blank" rel="noopener" class="fmenu-action pink">Book a Call</a>
+    <a href="https://www.linkedin.com/in/durva-d-2850591bb/" target="_blank" rel="noopener" class="fmenu-action yellow">LinkedIn</a>
+    <a href="mailto:durvadalaluk@gmail.com" class="fmenu-action ghost">Email</a>
+  </div>
+  <p class="fmenu-hint">Click anywhere outside to close</p>
 </div>
 
 <div class="ph">
@@ -121,139 +158,38 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;b
 <div class="content">
   <div class="inn">
 
-    <!-- WRITING -->
-    <div class="sec-label r" style="color:var(--yellow);">Long-form Writing and Web Copy</div>
+    <div class="sec-l r" style="color:var(--yellow);">Long-form Writing and Web Copy</div>
 
-    <div class="piece r">
-      <div class="piece-head" onclick="togglePiece(this)">
-        <div class="piece-hl"><span class="piece-tag t-blog">Personal Blog</span><span class="piece-name">Baristog — Travel and Food</span></div>
-        <span class="piece-arrow">+</span>
-      </div>
-      <div class="piece-body">
-        <div class="piece-inner">
-          <p class="piece-desc">Personal travel and food blog. Long-form writing that combines storytelling with genuine passion for the subject.</p>
-          <a href="https://baristog.blogspot.com/" target="_blank" rel="noopener" class="piece-link" style="color:var(--yellow);">Visit Blog</a>
-        </div>
-      </div>
-    </div>
+    <div class="piece r"><div class="piece-head" onclick="togP(this)"><div class="piece-hl"><span class="piece-tag t-blog">Personal Blog</span><span class="piece-name">Baristog — Travel and Food</span></div><span class="piece-arrow">+</span></div><div class="piece-body"><div class="piece-inner"><p class="piece-desc">Personal travel and food blog. Long-form writing that combines storytelling with genuine passion for the subject.</p><a href="https://baristog.blogspot.com/" target="_blank" rel="noopener" class="piece-link" style="color:var(--yellow);">Visit Blog</a></div></div></div>
 
-    <div class="piece r">
-      <div class="piece-head" onclick="togglePiece(this)">
-        <div class="piece-hl"><span class="piece-tag t-blog">Industry Writing</span><span class="piece-name">Aagey Se Right — Advertising</span></div>
-        <span class="piece-arrow">+</span>
-      </div>
-      <div class="piece-body">
-        <div class="piece-inner">
-          <p class="piece-desc">Articles on advertising, campaign ideation, and brand philosophy for one of India's prominent creative agencies.</p>
-          <a href="https://www.aageyseright.com/blog/bean-and-bread" target="_blank" rel="noopener" class="piece-link" style="color:var(--pink);">Read Article</a>
-        </div>
-      </div>
-    </div>
+    <div class="piece r"><div class="piece-head" onclick="togP(this)"><div class="piece-hl"><span class="piece-tag t-blog">Industry Writing</span><span class="piece-name">Aagey Se Right — Advertising</span></div><span class="piece-arrow">+</span></div><div class="piece-body"><div class="piece-inner"><p class="piece-desc">Articles on advertising, campaign ideation, and brand philosophy for one of India's prominent creative agencies.</p><a href="https://www.aageyseright.com/blog/bean-and-bread" target="_blank" rel="noopener" class="piece-link" style="color:var(--pink);">Read Article</a></div></div></div>
 
-    <div class="piece r">
-      <div class="piece-head" onclick="togglePiece(this)">
-        <div class="piece-hl"><span class="piece-tag t-blog">Recipe Blog</span><span class="piece-name">Bite Bandits — Daily Recipes</span></div>
-        <span class="piece-arrow">+</span>
-      </div>
-      <div class="piece-body">
-        <div class="piece-inner">
-          <p class="piece-desc">Daily recipe blog. Writing that is warm, specific, and actually useful in a kitchen. Running alongside everything else for years.</p>
-          <a href="https://bitebandits.blogspot.com" target="_blank" rel="noopener" class="piece-link" style="color:var(--green);">Visit Blog</a>
-        </div>
-      </div>
-    </div>
+    <div class="piece r"><div class="piece-head" onclick="togP(this)"><div class="piece-hl"><span class="piece-tag t-blog">Recipe Blog</span><span class="piece-name">Bite Bandits — Daily Recipes</span></div><span class="piece-arrow">+</span></div><div class="piece-body"><div class="piece-inner"><p class="piece-desc">Daily recipe blog. Writing that is warm, specific, and actually useful in a kitchen. Running alongside everything else for years.</p><a href="https://bitebandits.blogspot.com" target="_blank" rel="noopener" class="piece-link" style="color:var(--green);">Visit Blog</a></div></div></div>
 
-    <div class="piece r">
-      <div class="piece-head" onclick="togglePiece(this)">
-        <div class="piece-hl"><span class="piece-tag t-web">Website Content</span><span class="piece-name">Leam Music Academy — Web Copy</span></div>
-        <span class="piece-arrow">+</span>
-      </div>
-      <div class="piece-body">
-        <div class="piece-inner">
-          <p class="piece-desc">Full website content strategy for a next-gen music teaching platform. Single brief: futuristic, informative, captivating. Full ownership of layout decisions, content hierarchy, and tone of voice. Site is live.</p>
-          <a href="https://www.leam.in" target="_blank" rel="noopener" class="piece-link" style="color:var(--green);">Visit leam.in</a>
-        </div>
-      </div>
-    </div>
+    <div class="piece r"><div class="piece-head" onclick="togP(this)"><div class="piece-hl"><span class="piece-tag t-web">Website Content</span><span class="piece-name">Leam Music Academy — Web Copy</span></div><span class="piece-arrow">+</span></div><div class="piece-body"><div class="piece-inner"><p class="piece-desc">Full website content strategy for a next-gen music teaching platform. Futuristic, informative, captivating. Full ownership of layout decisions, content hierarchy, and tone of voice. Site is live.</p><a href="https://www.leam.in" target="_blank" rel="noopener" class="piece-link" style="color:var(--green);">Visit leam.in</a></div></div></div>
 
-    <!-- SOCIAL MEDIA -->
-    <div class="sec-label r" style="color:var(--pink);margin-top:24px;">Social Media Copywriting — 30+ Brands</div>
-    <p style="font-size:14px;line-height:1.8;color:var(--muted);max-width:600px;margin-bottom:8px;" class="r">Written and curated social content across Instagram and digital for brands across industries. Click a category to see the brands.</p>
+    <div class="sec-l r" style="color:var(--pink);margin-top:16px;">Social Media Copywriting — 30+ Brands</div>
+    <p class="r" style="font-size:14px;line-height:1.8;color:var(--muted);max-width:600px;margin-bottom:8px;">Written and curated social content for brands across industries. Click a category to see the brands.</p>
 
-    <div class="cat r" id="cat-hospitality">
-      <div class="cat-head" onclick="toggleCat(this)">
-        <div class="cat-hl"><div class="cat-dot" style="background:var(--pink);"></div><span class="cat-name">Hospitality and Food</span></div>
-        <span class="cat-count">7 brands</span>
-        <span class="cat-arrow" style="border-color:rgba(232,25,90,.3);color:var(--pink);">+</span>
-      </div>
-      <div class="cat-body">
-        <div class="cat-grid">
-          <div class="bt"><div class="bt-dot" style="background:var(--pink);"></div><h4 class="bt-name">Bare Press</h4><p class="bt-role">Social copywriting</p></div>
-          <div class="bt"><div class="bt-dot" style="background:var(--pink);"></div><h4 class="bt-name">Cafe de Meet</h4><p class="bt-role">Social copywriting</p></div>
-          <div class="bt"><div class="bt-dot" style="background:var(--pink);"></div><h4 class="bt-name">BB Social</h4><p class="bt-role">Social copywriting</p></div>
-          <div class="bt"><div class="bt-dot" style="background:var(--pink);"></div><h4 class="bt-name">Park Inn by Radisson</h4><p class="bt-role">Social copywriting</p></div>
-          <div class="bt"><div class="bt-dot" style="background:var(--pink);"></div><h4 class="bt-name">West Indian Honey Company</h4><p class="bt-role">Social copywriting</p></div>
-          <div class="bt"><div class="bt-dot" style="background:var(--pink);"></div><h4 class="bt-name">Irenic Coffee House</h4><p class="bt-role">Social copywriting</p></div>
-          <div class="bt"><div class="bt-dot" style="background:var(--pink);"></div><h4 class="bt-name">Food Craft</h4><p class="bt-role">Social copywriting</p></div>
-        </div>
-      </div>
-    </div>
+    <div class="cat r"><div class="cat-head" onclick="togC(this)"><div class="cat-hl"><div class="cat-dot" style="background:var(--pink);"></div><span class="cat-name">Hospitality and Food</span></div><span class="cat-count">7 brands</span><span class="cat-arrow" style="border-color:rgba(232,25,90,.3);color:var(--pink);">+</span></div><div class="cat-body"><div class="cat-grid"><div class="bt"><div class="bt-dot" style="background:var(--pink);"></div><h4 class="bt-name">Bare Press</h4><p class="bt-role">Social copywriting</p></div><div class="bt"><div class="bt-dot" style="background:var(--pink);"></div><h4 class="bt-name">Cafe de Meet</h4><p class="bt-role">Social copywriting</p></div><div class="bt"><div class="bt-dot" style="background:var(--pink);"></div><h4 class="bt-name">BB Social</h4><p class="bt-role">Social copywriting</p></div><div class="bt"><div class="bt-dot" style="background:var(--pink);"></div><h4 class="bt-name">Park Inn by Radisson</h4><p class="bt-role">Social copywriting</p></div><div class="bt"><div class="bt-dot" style="background:var(--pink);"></div><h4 class="bt-name">West Indian Honey Company</h4><p class="bt-role">Social copywriting</p></div><div class="bt"><div class="bt-dot" style="background:var(--pink);"></div><h4 class="bt-name">Irenic Coffee House</h4><p class="bt-role">Social copywriting</p></div><div class="bt"><div class="bt-dot" style="background:var(--pink);"></div><h4 class="bt-name">Food Craft</h4><p class="bt-role">Social copywriting</p></div></div></div></div>
 
-    <div class="cat r" id="cat-travel">
-      <div class="cat-head" onclick="toggleCat(this)">
-        <div class="cat-hl"><div class="cat-dot" style="background:var(--yellow);"></div><span class="cat-name">Travel</span></div>
-        <span class="cat-count">3 brands</span>
-        <span class="cat-arrow" style="border-color:rgba(240,220,0,.3);color:var(--yellow);">+</span>
-      </div>
-      <div class="cat-body">
-        <div class="cat-grid">
-          <div class="bt"><div class="bt-dot" style="background:var(--yellow);"></div><h4 class="bt-name">Miles and Frames</h4><p class="bt-role">Social copywriting</p></div>
-          <div class="bt"><div class="bt-dot" style="background:var(--yellow);"></div><h4 class="bt-name">Classic World Holiday</h4><p class="bt-role">Social copywriting</p></div>
-          <div class="bt"><div class="bt-dot" style="background:var(--yellow);"></div><h4 class="bt-name">Jesal Holidays</h4><p class="bt-role">Social copywriting</p></div>
-        </div>
-      </div>
-    </div>
+    <div class="cat r"><div class="cat-head" onclick="togC(this)"><div class="cat-hl"><div class="cat-dot" style="background:var(--yellow);"></div><span class="cat-name">Travel</span></div><span class="cat-count">3 brands</span><span class="cat-arrow" style="border-color:rgba(240,220,0,.3);color:var(--yellow);">+</span></div><div class="cat-body"><div class="cat-grid"><div class="bt"><div class="bt-dot" style="background:var(--yellow);"></div><h4 class="bt-name">Miles and Frames</h4><p class="bt-role">Social copywriting</p></div><div class="bt"><div class="bt-dot" style="background:var(--yellow);"></div><h4 class="bt-name">Classic World Holiday</h4><p class="bt-role">Social copywriting</p></div><div class="bt"><div class="bt-dot" style="background:var(--yellow);"></div><h4 class="bt-name">Jesal Holidays</h4><p class="bt-role">Social copywriting</p></div></div></div></div>
 
-    <div class="cat r" id="cat-auto">
-      <div class="cat-head" onclick="toggleCat(this)">
-        <div class="cat-hl"><div class="cat-dot" style="background:var(--green);"></div><span class="cat-name">Automotive</span></div>
-        <span class="cat-count">2 brands</span>
-        <span class="cat-arrow" style="border-color:rgba(0,184,76,.3);color:var(--green);">+</span>
-      </div>
-      <div class="cat-body">
-        <div class="cat-grid">
-          <div class="bt"><div class="bt-dot" style="background:var(--green);"></div><h4 class="bt-name">Presidency Skoda</h4><p class="bt-role">Social copywriting</p></div>
-          <div class="bt"><div class="bt-dot" style="background:var(--green);"></div><h4 class="bt-name">Pramukh Tata</h4><p class="bt-role">Social copywriting</p></div>
-        </div>
-      </div>
-    </div>
+    <div class="cat r"><div class="cat-head" onclick="togC(this)"><div class="cat-hl"><div class="cat-dot" style="background:var(--green);"></div><span class="cat-name">Automotive</span></div><span class="cat-count">2 brands</span><span class="cat-arrow" style="border-color:rgba(0,184,76,.3);color:var(--green);">+</span></div><div class="cat-body"><div class="cat-grid"><div class="bt"><div class="bt-dot" style="background:var(--green);"></div><h4 class="bt-name">Presidency Skoda</h4><p class="bt-role">Social copywriting</p></div><div class="bt"><div class="bt-dot" style="background:var(--green);"></div><h4 class="bt-name">Pramukh Tata</h4><p class="bt-role">Social copywriting</p></div></div></div></div>
 
-    <div class="cat r" id="cat-sports">
-      <div class="cat-head" onclick="toggleCat(this)">
-        <div class="cat-hl"><div class="cat-dot" style="background:var(--pink);"></div><span class="cat-name">Sports</span></div>
-        <span class="cat-count">2 brands</span>
-        <span class="cat-arrow" style="border-color:rgba(232,25,90,.3);color:var(--pink);">+</span>
-      </div>
-      <div class="cat-body">
-        <div class="cat-grid">
-          <div class="bt"><div class="bt-dot" style="background:var(--pink);"></div><h4 class="bt-name">Kick Sports</h4><p class="bt-role">Social copywriting</p></div>
-          <div class="bt"><div class="bt-dot" style="background:var(--pink);"></div><h4 class="bt-name">K2 Callisthenics</h4><p class="bt-role">Social copywriting</p></div>
-        </div>
-      </div>
-    </div>
+    <div class="cat r"><div class="cat-head" onclick="togC(this)"><div class="cat-hl"><div class="cat-dot" style="background:var(--pink);"></div><span class="cat-name">Sports</span></div><span class="cat-count">2 brands</span><span class="cat-arrow" style="border-color:rgba(232,25,90,.3);color:var(--pink);">+</span></div><div class="cat-body"><div class="cat-grid"><div class="bt"><div class="bt-dot" style="background:var(--pink);"></div><h4 class="bt-name">Kick Sports</h4><p class="bt-role">Social copywriting</p></div><div class="bt"><div class="bt-dot" style="background:var(--pink);"></div><h4 class="bt-name">K2 Callisthenics</h4><p class="bt-role">Social copywriting</p></div></div></div></div>
 
-    <div class="cat r" id="cat-influencers">
-      <div class="cat-head" onclick="toggleCat(this)">
-        <div class="cat-hl"><div class="cat-dot" style="background:var(--yellow);"></div><span class="cat-name">Influencers</span></div>
-        <span class="cat-count">2 brands</span>
-        <span class="cat-arrow" style="border-color:rgba(240,220,0,.3);color:var(--yellow);">+</span>
-      </div>
-      <div class="cat-body">
-        <div class="cat-grid">
-          <div class="bt"><div class="bt-dot" style="background:var(--yellow);"></div><h4 class="bt-name">Manish Mehta</h4><p class="bt-role">Social copywriting</p></div>
-          <div class="bt"><div class="bt-dot" style="background:var(--yellow);"></div><h4 class="bt-name">Pooja Vyas</h4><p class="bt-role">Social copywriting</p></div>
-        </div>
-      </div>
+    <div class="cat r"><div class="cat-head" onclick="togC(this)"><div class="cat-hl"><div class="cat-dot" style="background:var(--yellow);"></div><span class="cat-name">Influencers</span></div><span class="cat-count">2 brands</span><span class="cat-arrow" style="border-color:rgba(240,220,0,.3);color:var(--yellow);">+</span></div><div class="cat-body"><div class="cat-grid"><div class="bt"><div class="bt-dot" style="background:var(--yellow);"></div><h4 class="bt-name">Manish Mehta</h4><p class="bt-role">Social copywriting</p></div><div class="bt"><div class="bt-dot" style="background:var(--yellow);"></div><h4 class="bt-name">Pooja Vyas</h4><p class="bt-role">Social copywriting</p></div></div></div></div>
+
+    <div class="act-nav r">
+      <a href="onground.html" class="an prev">
+        <span class="an-label">Act II</span>
+        <span class="an-title" style="color:var(--green);">On the Ground</span>
+      </a>
+      <a href="onscreen.html" class="an next">
+        <span class="an-label">Act I</span>
+        <span class="an-title" style="color:var(--pink);">On Screen</span>
+      </a>
     </div>
 
   </div>
@@ -261,36 +197,23 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;b
 
 <footer>
   <span class="ft">© 2026 Durva Dalal</span>
-  <a href="index.html" class="ft ft-back">Back to Home</a>
+  <a href="index.html" class="ft" style="color:var(--yellow);display:flex;align-items:center;gap:5px;">← Back to Home</a>
 </footer>
 
 <script>
 const cur=document.getElementById('cur');
-if(cur&&window.matchMedia('(hover:hover) and (pointer:fine)').matches){
-  document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
-  document.addEventListener('mousedown',()=>cur.classList.add('p'));
-  document.addEventListener('mouseup',()=>cur.classList.remove('p'));
-  document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>cur.classList.add('e'));el.addEventListener('mouseleave',()=>cur.classList.remove('e'));});
-}
-const nb=document.getElementById('nb'),mm=document.getElementById('mm');
-nb.addEventListener('click',()=>{mm.classList.toggle('s');const s=nb.querySelectorAll('span'),o=mm.classList.contains('s');s[0].style.transform=o?'rotate(45deg) translate(5px,5px)':'';s[1].style.opacity=o?'0':'1';s[2].style.transform=o?'rotate(-45deg) translate(5px,-5px)':'';});
-mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mm.classList.remove('s');nb.querySelectorAll('span').forEach(s=>{s.style.transform='';s.style.opacity='1';});}));
+if(cur&&window.matchMedia('(hover:hover) and (pointer:fine)').matches){document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});document.addEventListener('mousedown',()=>cur.classList.add('p'));document.addEventListener('mouseup',()=>cur.classList.remove('p'));document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>cur.classList.add('e'));el.addEventListener('mouseleave',()=>cur.classList.remove('e'));});}
+const menuBtn=document.getElementById('menuBtn'),fmenu=document.getElementById('fmenu');
+function openMenu(){fmenu.classList.add('on');fmenu.setAttribute('aria-hidden','false');menuBtn.setAttribute('aria-expanded','true');const s=menuBtn.querySelectorAll('span');s[0].style.transform='rotate(45deg) translate(5px,5px)';s[1].style.opacity='0';s[2].style.transform='rotate(-45deg) translate(5px,-5px)';}
+function closeMenu(){fmenu.classList.remove('on');fmenu.setAttribute('aria-hidden','true');menuBtn.setAttribute('aria-expanded','false');const s=menuBtn.querySelectorAll('span');s[0].style.transform='';s[1].style.opacity='1';s[2].style.transform='';}
+menuBtn.addEventListener('click',e=>{e.stopPropagation();fmenu.classList.contains('on')?closeMenu():openMenu();});
+document.addEventListener('click',e=>{if(fmenu.classList.contains('on')&&!fmenu.contains(e.target)&&e.target!==menuBtn)closeMenu();});
+fmenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
 const ro=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('v');}),{threshold:.08});
 document.querySelectorAll('.r').forEach(el=>ro.observe(el));
-
-function togglePiece(head){
-  const piece=head.closest('.piece');
-  const wasOpen=piece.classList.contains('open');
-  document.querySelectorAll('.piece.open').forEach(p=>p.classList.remove('open'));
-  if(!wasOpen) piece.classList.add('open');
-}
-
-function toggleCat(head){
-  const cat=head.closest('.cat');
-  const wasOpen=cat.classList.contains('open');
-  document.querySelectorAll('.cat.open').forEach(c=>c.classList.remove('open'));
-  if(!wasOpen) cat.classList.add('open');
-}
+function togP(h){const p=h.closest('.piece'),w=p.classList.contains('open');document.querySelectorAll('.piece.open').forEach(x=>x.classList.remove('open'));if(!w)p.classList.add('open');}
+function togC(h){const c=h.closest('.cat'),w=c.classList.contains('open');document.querySelectorAll('.cat.open').forEach(x=>x.classList.remove('open'));if(!w)c.classList.add('open');}
 </script>
 </body>
 </html>
